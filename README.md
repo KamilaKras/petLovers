@@ -13,3 +13,8 @@ System do zarządzania przychodnią weterynaryjną "Zakład W dobrym domu, zdrow
 3. **Zarządzanie lekami**: Katalogowanie leków przepisywanych pacjentom, w tym informacje o nazwie leku, dawce, sposobie stosowania oraz cenie netto.
 4. **Obliczanie cen brutto**: Automatyczne wyliczanie cen brutto leków na podstawie podanych cen netto i aktualnej stawki VAT.
 
+## Zespół tworzący system:
+1. Weronika Stasiak: https://github.com/veroniiq 
+2. Elena Lukyanchuk: https://github.com/elukyanchukk 
+3. Kamila Kraśniewska (PO): https://github.com/KamilaKras
+4. Andrzej Jerzykiewicz: https://github.com/ajerzykiewicz
