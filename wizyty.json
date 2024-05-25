@@ -1,0 +1,50 @@
+{
+    "1": {
+        "Data wizyty": "15.06.2024",
+        "Pacjent": {
+            "name": "Jan",
+            "surname": "Kowalski",
+            "email": "jan.kowalski@example.com",
+            "phone": "123-456-789"
+        },
+        "Choroba": "Alergia",
+        "Leki": "kldfk",
+        "Cena": 123.0
+    },
+    "2": {
+        "Data wizyty": "04.06.2024",
+        "Pacjent": {
+            "name": "Anna",
+            "surname": "Nowak",
+            "email": "anna.nowak@example.com",
+            "phone": "987-654-321"
+        },
+        "Choroba": "dkf",
+        "Leki": "df;ldfl",
+        "Cena": 120.53999999999999
+    },
+    "3": {
+        "Data wizyty": "13.06.2024",
+        "Pacjent": {
+            "name": "Jan",
+            "surname": "Kowalski",
+            "email": "jan.kowalski@example.com",
+            "phone": "123-456-789"
+        },
+        "Choroba": "jdfl",
+        "Leki": "dfjldf",
+        "Cena": "68.88z\u0142"
+    },
+    "4": {
+        "Data wizyty": "04.06.2024",
+        "Pacjent": {
+            "name": "Piotr",
+            "surname": "Wi\u015bniewski",
+            "email": "piotr.wisniewski@example.com",
+            "phone": "555-666-777"
+        },
+        "Choroba": "jdfll",
+        "Leki": "rto",
+        "Cena": "120.53999999999999z\u0142"
+    }
+}
