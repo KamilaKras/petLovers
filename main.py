@@ -81,10 +81,13 @@ def wyswietl_liste_klientow(klienci):
             print(f"ID: {klient['id_zwierzecia']}, Imię: {klient['imie']}, Nazwisko: {klient['nazwisko']}, "
                   f"Email: {klient['email']}, Telefon: {klient['telefon']}, "
                   f"Zwierzę: {zwierze['imie_zwierzecia']}, Wiek: {zwierze['wiek_zwierzecia']}, Rasa: {zwierze['rasa']}")
+            
+            # UWAGA - tą funkcję należy powiązać z resztą kodu
 def przeliczanie_ceny (cena_netto):
 
     cena_brutto = cena_netto * 1.23
     return cena_brutto
+
 def main():
     plik = 'clients.json'
     klienci = wczytaj_dane(plik)
