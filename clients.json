@@ -1,0 +1,26 @@
+[
+        {
+            "id_zwierzecia": "001",
+            "imie": "Jan",
+            "nazwisko": "Kowalski",
+            "email": "jan.kowalski@example.com",
+            "telefon": "123456789",
+            "zwierze": {
+                "imie_zwierzecia": "Burek",
+                "wiek_zwierzecia": "5",
+                "rasa": "Pies"
+            }
+        },
+        {
+            "id_zwierzecia": "002",
+            "imie": "Anna",
+            "nazwisko": "Nowak",
+            "email": "anna.nowak@example.com",
+            "telefon": "987654321",
+            "zwierze": {
+                "imie_zwierzecia": "Mika",
+                "wiek_zwierzecia": "3",
+                "rasa": "Kot"
+            }
+        }
+    ]
