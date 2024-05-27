@@ -166,5 +166,13 @@
         "Leki": "Terapia dla zwierz\u0105t",
         "Cena netto": 70.0,
         "Cena brutto": 86.1
+    },
+    "22": {
+        "Data wizyty": "21.05.2024",
+        "Pacjent": "016",
+        "Choroba": "Zapalenie uszu",
+        "Leki": "Otifree",
+        "Cena netto": 120.0,
+        "Cena brutto": 147.6
     }
 }
