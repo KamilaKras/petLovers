@@ -193,5 +193,18 @@
             "typ_zwierzecia": "Papuga",
             "rasa": "Ara"
         }
+    },
+    {
+        "id_zwierzecia": "016",
+        "imie": "Tomasz",
+        "nazwisko": "Wiatr",
+        "email": "tomasz.wiatr@example.com",
+        "telefon": "752245565",
+        "zwierze": {
+            "imie_zwierzecia": "Hugo",
+            "wiek_zwierzecia": "7",
+            "typ_zwierzecia": "Pies",
+            "rasa": "Golden Retriever"
+        }
     }
 ]
