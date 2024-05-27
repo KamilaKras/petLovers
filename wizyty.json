@@ -107,7 +107,7 @@
         "Data wizyty": "23.06.2023",
         "Pacjent": "006",
         "Choroba": "Stres",
-        "Leki": "Terapia dla zwierząt",
+        "Leki": "Terapia dla zwierz\u0414\u2026t",
         "Cena netto": 90.0,
         "Cena brutto": 110.7
     },
@@ -122,7 +122,7 @@
     "16": {
         "Data wizyty": "25.06.2023",
         "Pacjent": "007",
-        "Choroba": "Otyłosc",
+        "Choroba": "Oty\u0415\u201aosc",
         "Leki": "Dieta",
         "Cena netto": 70.0,
         "Cena brutto": 86.1
@@ -158,5 +158,13 @@
         "Leki": "Preparat przeciwkleszczowy",
         "Cena netto": 150.0,
         "Cena brutto": 184.5
+    },
+    "21": {
+        "Data wizyty": "27.05.2024",
+        "Pacjent": "015",
+        "Choroba": "Stres",
+        "Leki": "Terapia dla zwierz\u0105t",
+        "Cena netto": 70.0,
+        "Cena brutto": 86.1
     }
 }

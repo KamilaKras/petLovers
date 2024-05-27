@@ -1,183 +1,197 @@
-[{
-    "id_zwierzecia": "001",
-    "imie": "Jan",
-    "nazwisko": "Kowalski",
-    "email": "jan.kowalski@example.com",
-    "telefon": "123456789",
-    "zwierze": {
-        "imie_zwierzecia": "Burek",
-        "wiek_zwierzecia": "5",
-        "typ_zwierzecia": "pies",
-        "rasa": "Chihuahua"
+[
+    {
+        "id_zwierzecia": "001",
+        "imie": "Jan",
+        "nazwisko": "Kowalski",
+        "email": "jan.kowalski@example.com",
+        "telefon": "123456789",
+        "zwierze": {
+            "imie_zwierzecia": "Burek",
+            "wiek_zwierzecia": "5",
+            "typ_zwierzecia": "pies",
+            "rasa": "Chihuahua"
+        }
+    },
+    {
+        "id_zwierzecia": "002",
+        "imie": "Anna",
+        "nazwisko": "Nowak",
+        "email": "anna.nowak@example.com",
+        "telefon": "987654321",
+        "zwierze": {
+            "imie_zwierzecia": "Mika",
+            "wiek_zwierzecia": "3",
+            "typ_zwierzecia": "kot",
+            "rasa": "nie dotyczy"
+        }
+    },
+    {
+        "id_zwierzecia": "003",
+        "imie": "Katarzyna",
+        "nazwisko": "Psiolubna",
+        "email": "k.psiolubna@o2.pl",
+        "telefon": "987 278 092",
+        "zwierze": {
+            "imie_zwierzecia": "Helenka",
+            "wiek_zwierzecia": "3",
+            "typ_zwierzecia": "pies",
+            "rasa": "Owczarek niemiecki"
+        }
+    },
+    {
+        "id_zwierzecia": "004",
+        "imie": "Jack",
+        "nazwisko": "Sparrow",
+        "email": "superPirat@rum.pl",
+        "telefon": "839748736",
+        "zwierze": {
+            "imie_zwierzecia": "Czarna Perla",
+            "wiek_zwierzecia": "6",
+            "typ_zwierzecia": "Kot",
+            "rasa": "Sfinks"
+        }
+    },
+    {
+        "id_zwierzecia": "005",
+        "imie": "Bruce",
+        "nazwisko": "Wayne",
+        "email": "b.wayne@wayneenterprise.com",
+        "telefon": "555123456",
+        "zwierze": {
+            "imie_zwierzecia": "Batdog",
+            "wiek_zwierzecia": "4",
+            "typ_zwierzecia": "pies",
+            "rasa": "Doberman"
+        }
+    },
+    {
+        "id_zwierzecia": "006",
+        "imie": "Clark",
+        "nazwisko": "Kent",
+        "email": "c.kent@dailyplanet.com",
+        "telefon": "555987654",
+        "zwierze": {
+            "imie_zwierzecia": "Krypto",
+            "wiek_zwierzecia": "3",
+            "typ_zwierzecia": "pies",
+            "rasa": "Labrador"
+        }
+    },
+    {
+        "id_zwierzecia": "007",
+        "imie": "Peter",
+        "nazwisko": "Parker",
+        "email": "p.parker@dailybugle.com",
+        "telefon": "555676767",
+        "zwierze": {
+            "imie_zwierzecia": "Webby",
+            "wiek_zwierzecia": "1",
+            "typ_zwierzecia": "paj\u0414\u2026k",
+            "rasa": "Tarantula"
+        }
+    },
+    {
+        "id_zwierzecia": "008",
+        "imie": "Tony",
+        "nazwisko": "Stark",
+        "email": "tony.stark@starkindustries.com",
+        "telefon": "555888999",
+        "zwierze": {
+            "imie_zwierzecia": "IronCat",
+            "wiek_zwierzecia": "2",
+            "typ_zwierzecia": "kot",
+            "rasa": "Sfinks"
+        }
+    },
+    {
+        "id_zwierzecia": "009",
+        "imie": "Leia",
+        "nazwisko": "Organa",
+        "email": "princess.leia@rebellion.com",
+        "telefon": "555445566",
+        "zwierze": {
+            "imie_zwierzecia": "Chewie",
+            "wiek_zwierzecia": "5",
+            "typ_zwierzecia": "wookiee",
+            "rasa": "Kashyyyk"
+        }
+    },
+    {
+        "id_zwierzecia": "010",
+        "imie": "Sherlock",
+        "nazwisko": "Holmes",
+        "email": "s.holmes@bakerstreet.com",
+        "telefon": "555221b",
+        "zwierze": {
+            "imie_zwierzecia": "Watson",
+            "wiek_zwierzecia": "3",
+            "typ_zwierzecia": "pies",
+            "rasa": "Bulldog"
+        }
+    },
+    {
+        "id_zwierzecia": "011",
+        "imie": "James",
+        "nazwisko": "Bond",
+        "email": "j.bond@mi6.gov.uk",
+        "telefon": "555007007",
+        "zwierze": {
+            "imie_zwierzecia": "Martini",
+            "wiek_zwierzecia": "4",
+            "typ_zwierzecia": "kot",
+            "rasa": "Brytyjski"
+        }
+    },
+    {
+        "id_zwierzecia": "012",
+        "imie": "Jack",
+        "nazwisko": "Sparrow",
+        "email": "j.sparrow@blackpearl.com",
+        "telefon": "555pirate",
+        "zwierze": {
+            "imie_zwierzecia": "Kraken",
+            "wiek_zwierzecia": "6",
+            "typ_zwierzecia": "papuga",
+            "rasa": "Ara"
+        }
+    },
+    {
+        "id_zwierzecia": "013",
+        "imie": "Albus",
+        "nazwisko": "Dumbledore",
+        "email": "a.dumbledore@hogwarts.ac.uk",
+        "telefon": "555wizard",
+        "zwierze": {
+            "imie_zwierzecia": "Fawkes",
+            "wiek_zwierzecia": "unknown",
+            "typ_zwierzecia": "feniks",
+            "rasa": "Magiczny"
+        }
+    },
+    {
+        "id_zwierzecia": "014",
+        "imie": "Indiana",
+        "nazwisko": "Jones",
+        "email": "indy.jones@archaeology.com",
+        "telefon": "555adventure",
+        "zwierze": {
+            "imie_zwierzecia": "Snakes",
+            "wiek_zwierzecia": "unknown",
+            "typ_zwierzecia": "w\u0414\u2026\u0415\u0458",
+            "rasa": "Boa constrictor"
+        }
+    },
+    {
+        "id_zwierzecia": "015",
+        "imie": "Zofia",
+        "nazwisko": "Wi\u015bniewska",
+        "email": "zofia.wisniewska@example.com",
+        "telefon": "556675981",
+        "zwierze": {
+            "imie_zwierzecia": "Borys",
+            "wiek_zwierzecia": "4",
+            "typ_zwierzecia": "Papuga",
+            "rasa": "Ara"
+        }
     }
-},
-{
-    "id_zwierzecia": "002",
-    "imie": "Anna",
-    "nazwisko": "Nowak",
-    "email": "anna.nowak@example.com",
-    "telefon": "987654321",
-    "zwierze": {
-        "imie_zwierzecia": "Mika",
-        "wiek_zwierzecia": "3",
-        "typ_zwierzecia": "kot",
-        "rasa": "nie dotyczy"
-    }
-},
-{
-    "id_zwierzecia": "003",
-    "imie": "Katarzyna",
-    "nazwisko": "Psiolubna",
-    "email": "k.psiolubna@o2.pl",
-    "telefon": "987 278 092",
-    "zwierze": {
-        "imie_zwierzecia": "Helenka",
-        "wiek_zwierzecia": "3",
-        "typ_zwierzecia": "pies",
-        "rasa": "Owczarek niemiecki"
-    }
-},
-{
-    "id_zwierzecia": "004",
-    "imie": "Jack",
-    "nazwisko": "Sparrow",
-    "email": "superPirat@rum.pl",
-    "telefon": "839748736",
-    "zwierze": {
-        "imie_zwierzecia": "Czarna Perla",
-        "wiek_zwierzecia": "6",
-        "typ_zwierzecia": "Kot",
-        "rasa": "Sfinks"
-    }
-},
-{
-    "id_zwierzecia": "005",
-    "imie": "Bruce",
-    "nazwisko": "Wayne",
-    "email": "b.wayne@wayneenterprise.com",
-    "telefon": "555123456",
-    "zwierze": {
-        "imie_zwierzecia": "Batdog",
-        "wiek_zwierzecia": "4",
-        "typ_zwierzecia": "pies",
-        "rasa": "Doberman"
-    }
-},
-{
-    "id_zwierzecia": "006",
-    "imie": "Clark",
-    "nazwisko": "Kent",
-    "email": "c.kent@dailyplanet.com",
-    "telefon": "555987654",
-    "zwierze": {
-        "imie_zwierzecia": "Krypto",
-        "wiek_zwierzecia": "3",
-        "typ_zwierzecia": "pies",
-        "rasa": "Labrador"
-    }
-},
-{
-    "id_zwierzecia": "007",
-    "imie": "Peter",
-    "nazwisko": "Parker",
-    "email": "p.parker@dailybugle.com",
-    "telefon": "555676767",
-    "zwierze": {
-        "imie_zwierzecia": "Webby",
-        "wiek_zwierzecia": "1",
-        "typ_zwierzecia": "pająk",
-        "rasa": "Tarantula"
-    }
-},
-{
-    "id_zwierzecia": "008",
-    "imie": "Tony",
-    "nazwisko": "Stark",
-    "email": "tony.stark@starkindustries.com",
-    "telefon": "555888999",
-    "zwierze": {
-        "imie_zwierzecia": "IronCat",
-        "wiek_zwierzecia": "2",
-        "typ_zwierzecia": "kot",
-        "rasa": "Sfinks"
-    }
-},
-{
-    "id_zwierzecia": "009",
-    "imie": "Leia",
-    "nazwisko": "Organa",
-    "email": "princess.leia@rebellion.com",
-    "telefon": "555445566",
-    "zwierze": {
-        "imie_zwierzecia": "Chewie",
-        "wiek_zwierzecia": "5",
-        "typ_zwierzecia": "wookiee",
-        "rasa": "Kashyyyk"
-    }
-},
-{
-    "id_zwierzecia": "010",
-    "imie": "Sherlock",
-    "nazwisko": "Holmes",
-    "email": "s.holmes@bakerstreet.com",
-    "telefon": "555221b",
-    "zwierze": {
-        "imie_zwierzecia": "Watson",
-        "wiek_zwierzecia": "3",
-        "typ_zwierzecia": "pies",
-        "rasa": "Bulldog"
-    }
-},
-{
-    "id_zwierzecia": "011",
-    "imie": "James",
-    "nazwisko": "Bond",
-    "email": "j.bond@mi6.gov.uk",
-    "telefon": "555007007",
-    "zwierze": {
-        "imie_zwierzecia": "Martini",
-        "wiek_zwierzecia": "4",
-        "typ_zwierzecia": "kot",
-        "rasa": "Brytyjski"
-    }
-},
-{
-    "id_zwierzecia": "012",
-    "imie": "Jack",
-    "nazwisko": "Sparrow",
-    "email": "j.sparrow@blackpearl.com",
-    "telefon": "555pirate",
-    "zwierze": {
-        "imie_zwierzecia": "Kraken",
-        "wiek_zwierzecia": "6",
-        "typ_zwierzecia": "papuga",
-        "rasa": "Ara"
-    }
-},
-{
-    "id_zwierzecia": "013",
-    "imie": "Albus",
-    "nazwisko": "Dumbledore",
-    "email": "a.dumbledore@hogwarts.ac.uk",
-    "telefon": "555wizard",
-    "zwierze": {
-        "imie_zwierzecia": "Fawkes",
-        "wiek_zwierzecia": "unknown",
-        "typ_zwierzecia": "feniks",
-        "rasa": "Magiczny"
-    }
-},
-{
-    "id_zwierzecia": "014",
-    "imie": "Indiana",
-    "nazwisko": "Jones",
-    "email": "indy.jones@archaeology.com",
-    "telefon": "555adventure",
-    "zwierze": {
-        "imie_zwierzecia": "Snakes",
-        "wiek_zwierzecia": "unknown",
-        "typ_zwierzecia": "wąż",
-        "rasa": "Boa constrictor"
-    }
-}
 ]
