@@ -1,5 +1,4 @@
 import io
-# from main import generuj_id_zwierzecia, przeliczanie_ceny, wczytaj_dane, znajdz_klienta_po_id
 import json
 import os
 from unittest.mock import patch, mock_open
