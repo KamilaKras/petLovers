@@ -4,8 +4,11 @@ import clients
 
 def przeliczanie_ceny (cena_netto):
 
-    cena_brutto = cena_netto * 1.23
-    return round(cena_brutto, 2)
+    cena_brutto = cena_netto * 1.08
+    cena_brutto = round(cena_brutto, 2)
+    cena_brutto = str(cena_brutto)
+    cena_brutto = cena_brutto.replace('.', ',')
+    return cena_brutto
 
 def dodaj_wizyte(klienci):
 
