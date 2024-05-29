@@ -5,7 +5,7 @@ import clients
 def przeliczanie_ceny (cena_netto):
 
     cena_brutto = cena_netto * 1.23
-    return cena_brutto
+    return round(cena_brutto, 2)
 
 def dodaj_wizyte(klienci):
 
