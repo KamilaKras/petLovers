@@ -8,6 +8,7 @@ def przeliczanie_ceny (cena_netto):
     cena_brutto = round(cena_brutto, 2)
     cena_brutto = str(cena_brutto)
     cena_brutto = cena_brutto.replace('.', ',')
+    cena_brutto = f"{cena_brutto} zł"
     return cena_brutto
 
 def dodaj_wizyte(klienci):
@@ -53,7 +54,7 @@ def zapisz_wizyte(wizyta, plik_wizyt):
     with open(plik_wizyt, 'w') as file:
         json.dump(wizyty, file, indent=4)
     
-    print(f"Dodano wizytę. Cena brutto wizyty wynosi: {wizyta['Cena brutto']} zł")
+    print(f"Dodano wizytę. Cena brutto wizyty wynosi: {wizyta['Cena brutto']}")
 
 
 def wyswietl_wszystkie_wizyty(plik_wizyt):
