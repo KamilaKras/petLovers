@@ -17,6 +17,8 @@ def dodaj_wizyte(klienci):
     pacjent_id = input("ID pacjenta: ")
     choroba = input("Choroba: ")
     leki = input("Leki: ")
+    dawkowanie = input("Dawkowanie: ")
+    notatki = input("Dodatkowe informacje: ")
     cena_netto = float(input("Cena netto: "))
     cena_brutto = przeliczanie_ceny(cena_netto)
 
@@ -29,7 +31,11 @@ def dodaj_wizyte(klienci):
             "Data wizyty": data, 
             "Pacjent": pacjent_id,
             "Choroba": choroba, 
-            "Leki": leki, 
+            "Recepta": {
+                "Leki": leki, 
+                "Dawkowanie": dawkowanie
+                },
+            "Dodatkowe informacje": notatki,
             "Cena netto": cena_netto,
             "Cena brutto": cena_brutto
             }
@@ -70,7 +76,10 @@ def wyswietl_wszystkie_wizyty(plik_wizyt):
         else:
             print("Wszystkie zarejestrowane wizyty:")
             for id_wizyty, wizyta in wizyty.items():
-                print(f"Wizyta ID: {id_wizyty}, Data: {wizyta['Data wizyty']}, Pacjent ID: {wizyta['Pacjent']}, Choroba: {wizyta['Choroba']}, Leki: {wizyta['Leki']}, Cena brutto: {wizyta['Cena brutto']}")
+                recepta = wizyta['Recepta']
+                print(f"Wizyta ID: {id_wizyty}, Data: {wizyta['Data wizyty']}, Pacjent ID: {wizyta['Pacjent']}, Choroba: {wizyta['Choroba']}, "
+                        f"Leki: {recepta['Leki']}, Dawkowanie: {recepta['Dawkowanie']}, "
+                        f"Dodatkowe informacje: {wizyta['Dodatkowe informacje']}, Cena brutto: {wizyta['Cena brutto']}")
     except json.JSONDecodeError:
         print("Błąd podczas wczytywania danych wizyt.")
 
@@ -90,7 +99,10 @@ def wyswietl_wizyty_pacjenta(plik_wizyt, id_pacjenta):
             for id_wizyty, wizyta in wizyty.items():
                 if wizyta['Pacjent'] == id_pacjenta:
                     znaleziono_wizyty = True
-                    print(f"Wizyta ID: {id_wizyty}, Data: {wizyta['Data wizyty']}, Choroba: {wizyta['Choroba']}, Leki: {wizyta['Leki']}, Cena brutto: {wizyta['Cena brutto']}")
+                    recepta = wizyta['Recepta']
+                    print(f"Wizyta ID: {id_wizyty}, Data: {wizyta['Data wizyty']}, Choroba: {wizyta['Choroba']}, "
+                          f"Leki: {recepta['Leki']}, Dawkowanie: {recepta['Dawkowanie']}, "
+                          f"Dodatkowe informacje: {wizyta['Dodatkowe informacje']}, Cena brutto: {wizyta['Cena brutto']}")
             if not znaleziono_wizyty:
                 print("Nie znaleziono wizyt dla tego pacjenta.")
     except json.JSONDecodeError:
