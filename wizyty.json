@@ -1,3 +1,26 @@
 {
-
+    "1": {
+        "Data wizyty": "02.06.2024",
+        "Pacjent": "001",
+        "Choroba": "alergia",
+        "Recepta": {
+            "Leki": "witaminy",
+            "Dawkowanie": "1 tabletka dziennie"
+        },
+        "Dodatkowe informacje": "dodtkowani ",
+        "Cena netto": 100.0,
+        "Cena brutto": "108,0 z\u0142"
+    },
+    "2": {
+        "Data wizyty": "02.06.2024",
+        "Pacjent": "001",
+        "Choroba": null,
+        "Recepta": {
+            "Leki": null,
+            "Dawkowanie": null
+        },
+        "Dodatkowe informacje": null,
+        "Cena netto": "Brak danych",
+        "Cena brutto": "Brak danych"
+    }
 }

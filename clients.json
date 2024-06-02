@@ -1,3 +1,16 @@
 [
-
+    {
+        "id_zwierzecia": "001",
+        "imie": "Kasia",
+        "nazwisko": "Nowak",
+        "email": "KJJSK",
+        "telefon": "987657389",
+        "zwierze": {
+            "imie_zwierzecia": "Burek",
+            "wiek_zwierzecia": "10",
+            "typ_zwierzecia": "kot",
+            "plec_zwierzecia": "samiec",
+            "rasa": "owczarek"
+        }
+    }
 ]
