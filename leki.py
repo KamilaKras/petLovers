@@ -18,9 +18,14 @@ def zapisz_leki(leki):
 
 def dodaj_lek():
     leki = wczytaj_leki()
-    nazwa = input("Podaj nazwę leku: ")
-    ilosc = int(input("Podaj ilość: "))
-    dostawca = input("Podaj dostawcę: ")
+    nazwa = input("Podaj nazwę leku: ").strip()
+    ilosc_input = input("Podaj ilość: ").strip()
+    try:
+        ilosc = int(ilosc_input)
+    except ValueError:
+        print("Nieprawidłowa ilość. Proszę podać liczbę.")
+        return
+    dostawca = input("Podaj dostawcę: ").strip()
 
     if nazwa in leki:
         print("Lek już istnieje w bazie.")
@@ -34,7 +39,7 @@ def dodaj_lek():
 
 def usun_lek():
     leki = wczytaj_leki()
-    nazwa = input("Podaj nazwę leku do usunięcia: ")
+    nazwa = input("Podaj nazwę leku do usunięcia: ").strip()
 
     if nazwa in leki:
         del leki[nazwa]
@@ -45,11 +50,16 @@ def usun_lek():
 
 def edytuj_lek():
     leki = wczytaj_leki()
-    nazwa = input("Podaj nazwę leku do edytowania: ")
-    dokladny_wybor = input("Czy chcesz edytować ilość leku (I) czy zmienić dostawcę leku (D)? (I/D): ").upper()
+    nazwa = input("Podaj nazwę leku do edytowania: ").strip()
+    dokladny_wybor = input("Czy chcesz edytować ilość leku (I) czy zmienić dostawcę leku (D)? (I/D): ").strip().upper()
     if dokladny_wybor == 'I':
         if nazwa in leki:
-            nowa_ilosc = int(input(f"Podaj nową ilość dla {nazwa}: "))
+            nowa_ilosc_input = input(f"Podaj nową ilość dla {nazwa}: ").strip()
+            try:
+                nowa_ilosc = int(nowa_ilosc_input)
+            except ValueError:
+                print("Nieprawidłowa ilość. Proszę podać liczbę.")
+                return
             leki[nazwa]["ilosc"] = nowa_ilosc
             zapisz_leki(leki)
             print(f"Ilość leku {nazwa} została zaktualizowana.")
@@ -57,7 +67,7 @@ def edytuj_lek():
             print("Lek nie istnieje w bazie.")
     elif dokladny_wybor == 'D':
         if nazwa in leki:
-            nowy_dostawca = str(input(f"Podaj nowego dostawcę: "))
+            nowy_dostawca = input(f"Podaj nowego dostawcę: ").strip()
             leki[nazwa]["dostawca"] = nowy_dostawca
             zapisz_leki(leki)
             print(f"Dostawca leku {nazwa} został zaktualizowany.")

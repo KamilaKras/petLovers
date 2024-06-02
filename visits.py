@@ -12,14 +12,13 @@ def przeliczanie_ceny (cena_netto):
     return cena_brutto
 
 def dodaj_wizyte(klienci):
-
     data = input("Data wizyty: (DD.MM.YYYY): ").strip() or "Brak danych"
     pacjent_id = input("ID pacjenta: ").strip() or "Brak danych"
     choroba = input("Choroba: ").strip() or "Brak danych"
     leki = input("Leki: ").strip() or "Brak danych"
     dawkowanie = input("Dawkowanie: ").strip() or "Brak danych"
     notatki = input("Dodatkowe informacje: ").strip() or "Brak danych"
-    cena_netto_input = input("Cena netto: ").strip()  # Pobranie ceny netto
+    cena_netto_input = input("Cena netto: ").strip().replace(',', '.')  # Pobranie ceny netto
     cena_netto = float(cena_netto_input) if cena_netto_input else "Brak danych"
     cena_brutto = przeliczanie_ceny(cena_netto)
 
@@ -62,7 +61,6 @@ def zapisz_wizyte(wizyta, plik_wizyt):
         json.dump(wizyty, file, indent=4)
     
     print(f"Dodano wizytę. Cena brutto wizyty wynosi: {wizyta['Cena brutto']}")
-
 
 def wyswietl_wszystkie_wizyty(plik_wizyt):
     if not os.path.exists(plik_wizyt):
