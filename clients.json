@@ -1,3 +1,92 @@
-{
-
-}
+[
+    {
+        "id_zwierzecia": "001",
+        "imie": "Ania",
+        "nazwisko": "Nowak",
+        "email": "asdfh@gmail.com",
+        "telefon": "345678923",
+        "zwierze": {
+            "imie_zwierzecia": "Burek",
+            "data_urodzenia": "10.10.2001",
+            "typ_zwierzecia": "KOT",
+            "plec_zwierzecia": "Samiec",
+            "rasa": "owczarek",
+            "numer_mikroczipa": "123456789129356"
+        }
+    },
+    {
+        "id_zwierzecia": "002",
+        "imie": "SD",
+        "nazwisko": "AWSEDF",
+        "email": "GFDS",
+        "telefon": "234567876543",
+        "zwierze": {
+            "imie_zwierzecia": "ASDZXFC",
+            "data_urodzenia": "10.10.2021",
+            "typ_zwierzecia": "PIES",
+            "plec_zwierzecia": "SAMIEC",
+            "rasa": "KUNDELEK",
+            "numer_mikroczipa": "129405829345697"
+        }
+    },
+    {
+        "id_zwierzecia": "003",
+        "imie": "sdf",
+        "nazwisko": "gsaw",
+        "email": "aesfg",
+        "telefon": "",
+        "zwierze": {
+            "imie_zwierzecia": "fbds",
+            "data_urodzenia": "10.10.2021",
+            "typ_zwierzecia": "kot",
+            "plec_zwierzecia": "samiec",
+            "rasa": "a",
+            "numer_mikroczipa": "123948592835849"
+        }
+    },
+    {
+        "id_zwierzecia": "003",
+        "imie": "Ania",
+        "nazwisko": "Nowak",
+        "email": "asdfh@gmail.com",
+        "telefon": "345678923",
+        "zwierze": {
+            "imie_zwierzecia": "Burek",
+            "data_urodzenia": "10.10.2021",
+            "typ_zwierzecia": "pies",
+            "plec_zwierzecia": "Samiec",
+            "rasa": "owczarek",
+            "numer_mikroczipa": "123456789129356"
+        }
+    },
+    {
+        "id_zwierzecia": "004",
+        "imie": "ania",
+        "nazwisko": "esd",
+        "email": "ghj",
+        "telefon": "adij",
+        "zwierze": {
+            "imie_zwierzecia": "wesdfcg",
+            "data_urodzenia": "09.01.2024",
+            "typ_zwierzecia": "kot",
+            "plec_zwierzecia": "samiec",
+            "rasa": "sdg",
+            "numer_mikroczipa": "192834509827345"
+        }
+    },
+    {
+        "id_zwierzecia": "005",
+        "imie": "AHS",
+        "nazwisko": "YHJ",
+        "email": "VFHJ",
+        "telefon": "02938345TRY",
+        "zwierze": {
+            "imie_zwierzecia": "HU",
+            "data_urodzenia": "10.10.2021",
+            "typ_zwierzecia": "KOT",
+            "plec_zwierzecia": "SAMICA",
+            "rasa": "JH4",
+            "numer_mikroczipa": "976546789876342"
+        }
+    }
+]

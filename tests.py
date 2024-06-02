@@ -1,3 +1,4 @@
+import datetime
 import io
 import json
 import os
@@ -109,6 +110,53 @@ def test_wyswietl_wizyty_pacjenta():
     with patch('builtins.open', mock_file), patch('sys.stdout', new=io.StringIO()) as fake_out:
         visits.wyswietl_wizyty_pacjenta('wizyty.json', '001')
         assert fake_out.getvalue() == expected_output, "Test failed: Output for specific patient not as expected."
+# Test dla funkcji znajdz_klienta_po_imieniu_zwierzaka
+def test_znajdz_klienta_po_imieniu_zwierzaka():
+    klienci = [
+        {'id_zwierzecia': '001', 'zwierze': {'imie_zwierzecia': 'Burek'}},
+        {'id_zwierzecia': '002', 'zwierze': {'imie_zwierzecia': 'Azor'}},
+        {'id_zwierzecia': '003', 'zwierze': {'imie_zwierzecia': 'Burek'}}
+    ]
+    # Test, gdy zwierzak jest znaleziony
+    assert len(clients.znajdz_klienta_po_imieniu_zwierzaka(klienci, 'Burek')) == 2, "Błąd: powinno znaleźć dwóch klientów z imieniem zwierzaka 'Burek'"
+    # Test, gdy zwierzak nie jest znaleziony
+    assert clients.znajdz_klienta_po_imieniu_zwierzaka(klienci, 'Max') == [], "Błąd: powinno zwrócić pustą listę, gdy imię zwierzaka nie istnieje"
+
+# Test dla funkcji oblicz_wiek
+def test_oblicz_wiek():
+    # Test poprawnej daty
+    assert clients.oblicz_wiek('01.01.2010') == datetime.date.today().year - 2010, "Błąd: nieprawidłowe obliczenie wieku"
+    # Test przyszłej daty
+    assert clients.oblicz_wiek('01.01.2100') == 'nieprawidłowa data - 01.01.2100', "Błąd: przyszła data nie jest poprawna"
+    # Test niepoprawnej daty
+    assert 'nieprawidłowa data' in clients.oblicz_wiek('niepoprawna data'), "Błąd: niepoprawna data powinna zwrócić komunikat o błędzie"
+
+# Test dla funkcji znajdz_klienta_po_mikroczipie
+def test_znajdz_klienta_po_mikroczipie():
+    klienci = [
+        {'id_zwierzecia': '001', 'zwierze': {'numer_mikroczipa': '123456789012345'}},
+        {'id_zwierzecia': '002', 'zwierze': {'numer_mikroczipa': '543210987654321'}}
+    ]
+    # Test, gdy klient jest znaleziony
+    assert clients.znajdz_klienta_po_mikroczipie(klienci, '123456789012345') == klienci[0], "Błąd: powinno znaleźć klienta z numerem mikroczipa '123456789012345'"
+    # Test, gdy klient nie jest znaleziony
+    assert clients.znajdz_klienta_po_mikroczipie(klienci, '000000000000000') is None, "Błąd: powinno zwrócić None, gdy numer mikroczipa nie istnieje"
+
+# Test dla funkcji sprawdzenie_numeru_mikroczipa
+def test_sprawdzenie_numeru_mikroczipa():
+    klienci = [
+        {'id_zwierzecia': '001', 'zwierze': {'numer_mikroczipa': '123456789012345'}}
+    ]
+    # Test poprawnego numeru mikroczipa
+    with patch('builtins.input', side_effect=['543210987654321']):
+        assert clients.sprawdzenie_numeru_mikroczipa(klienci) == '543210987654321', "Błąd: powinno zwrócić podany numer mikroczipa"
+    # Test numeru mikroczipa, który już istnieje
+    with patch('builtins.input', side_effect=['123456789012345', '543210987654321']):
+        assert clients.sprawdzenie_numeru_mikroczipa(klienci) == '543210987654321', "Błąd: powinno zwrócić nowy numer mikroczipa, ponieważ pierwszy już istnieje"
+    # Test niepoprawnego numeru mikroczipa
+    with patch('builtins.input', side_effect=['123', '543210987654321']):
+        assert clients.sprawdzenie_numeru_mikroczipa(klienci) == '543210987654321', "Błąd: powinno zwrócić poprawny numer mikroczipa po podaniu niepoprawnego"
+
 
 # Wywołanie testów
 test_wczytaj_dane()
@@ -119,3 +167,7 @@ test_dodaj_wizyte()
 test_zapisz_wizyte()
 test_wyswietl_wszystkie_wizyty()
 test_wyswietl_wizyty_pacjenta()
+test_znajdz_klienta_po_imieniu_zwierzaka()
+test_oblicz_wiek()
+test_znajdz_klienta_po_mikroczipie()
+test_sprawdzenie_numeru_mikroczipa()

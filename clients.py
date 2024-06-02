@@ -23,7 +23,7 @@ def znajdz_klienta_po_imieniu_zwierzaka(klienci, imie_zwierzecia):
 def oblicz_wiek(data_urodzenia):
     try:
         dzisiaj = datetime.date.today()
-        urodziny = datetime.datetime.strptime(data_urodzenia, '%Y-%m-%d').date()
+        urodziny = datetime.datetime.strptime(data_urodzenia, '%d.%m.%Y').date()
 
         if urodziny > dzisiaj:
             raise ValueError
@@ -42,7 +42,7 @@ def znajdz_klienta_po_mikroczipie(klienci, numer_mikroczipa):
 
 def sprawdzenie_numeru_mikroczipa(klienci):
     while True:
-        numer_mikroczipa = input("Podaj numer mikroczipa zwierzęcia: ")
+        numer_mikroczipa = input("Podaj unikalny numer mikroczipa zwierzęcia: ")
         if not numer_mikroczipa.isdigit() or len(numer_mikroczipa) != 15:
             print("Numer mikroczipa musi być 15-cyfrowym ciągiem znaków.")
             continue
@@ -60,7 +60,7 @@ def dodaj_klienta(klienci, plik):
     email = input("Podaj email właściciela: ")
     telefon = input("Podaj telefon właściciela: ")
     imie_zwierzecia = input("Podaj imię zwierzęcia: ")
-    data_urodzenia_zwierzecia = input("Podaj datę urodzenia zwierzęcia (RRRR-MM-DD): ")
+    data_urodzenia_zwierzecia = input("Podaj datę urodzenia zwierzęcia (DD.MM.RRRR): ")
     typ_zwierzecia = input("Podaj typ zwierzęcia (np. kot, pies): ")
     plec_zwierzecia = input("Podaj płeć zwierzęcia (samiec/samica): ")
     rasa = input("Podaj rasę zwierzęcia: ")
@@ -128,7 +128,9 @@ def wyszukaj_pacjenta(klienci):
         if imie_lub_id.isdigit():
             klient = wyszukaj_pacjenta_po_id(klienci, imie_lub_id)
             if klient:
-                print(f"Imię zwierzęcia: {klient['zwierze']['imie_zwierzecia']}, Numer ID: {klient['id_zwierzecia']}, Imię właściciela: {klient['imie']}, Nazwisko właściciela: {klient['nazwisko']}")
+                zwierze = klient['zwierze']
+                wiek = oblicz_wiek(zwierze['data_urodzenia'])
+                print(f"Imię zwierzęcia: {klient['zwierze']['imie_zwierzecia']}, Numer ID: {klient['id_zwierzecia']}, Wiek w latach: {wiek}, Imię właściciela: {klient['imie']}, Nazwisko właściciela: {klient['nazwisko']}")
                 return klient
         else:
             znalezione_zwierzaki = wyszukaj_pacjenta_po_imieniu(klienci, imie_lub_id)
@@ -177,6 +179,7 @@ def wyszukaj_po_mikroczipie(klienci, numer_mikroczipa):
                   f"Typ: {zwierze['typ_zwierzecia']}\n"
                   f"Płeć: {zwierze['plec_zwierzecia']}\n"
                   f"Rasa: {zwierze['rasa']}\n"
+                  f"Wiek w latach: {zwierze['wiek']}\n"
                   f"Właściciel: {klient['imie']} {klient['nazwisko']}\n"
                   f"Email: {klient['email']}\n"
                   f"Telefon: {klient['telefon']}")
@@ -188,8 +191,12 @@ def wyswietl_liste_klientow(klienci):
         print("Brak klientów w bazie danych.")
     else:
         for klient in klienci:
-            zwierze = klient['zwierze']
-            wiek = oblicz_wiek(zwierze['data_urodzenia'])
-            print(f"ID: {klient['id_zwierzecia']}, Imię: {klient['imie']}, Nazwisko: {klient['nazwisko']}, "
-                  f"Email: {klient['email']}, Telefon: {klient['telefon']}, "
-                  f"Zwierzę: {zwierze['imie_zwierzecia']}, Data urodzenia: {zwierze['data_urodzenia']}, Wiek w latach: {wiek}, Typ: {zwierze['typ_zwierzecia']}, Płeć: {zwierze['plec_zwierzecia']}, Rasa: {zwierze['rasa']}, Numer mikroczipa: {zwierze['numer_mikroczipa']}")
+            if isinstance(klient, dict):
+                zwierze = klient['zwierze']
+                wiek = oblicz_wiek(zwierze['data_urodzenia'])
+                print(f"ID: {klient['id_zwierzecia']}, Imię: {klient['imie']}, Nazwisko: {klient['nazwisko']}, "
+                      f"Email: {klient['email']}, Telefon: {klient['telefon']}, "
+                      f"Zwierzę: {zwierze['imie_zwierzecia']}, Data urodzenia: {zwierze['data_urodzenia']}, Wiek w latach: {wiek}, Typ: {zwierze['typ_zwierzecia']}, Płeć: {zwierze['plec_zwierzecia']}, Rasa: {zwierze['rasa']}, Numer mikroczipa: {zwierze['numer_mikroczipa']}")
+            else:
+                print("Błąd danych: Niepoprawny format klienta, oczekiwano słownika.")
+    
