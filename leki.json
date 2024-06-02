@@ -1,0 +1,14 @@
+{
+    "Paracetamol": {
+        "ilosc": 100,
+        "dostawca": "PharmaCorp"
+    },
+    "Ibuprofen": {
+        "ilosc": 200,
+        "dostawca": "MediHealth"
+    },
+    "Amoxicillin": {
+        "ilosc": 150,
+        "dostawca": "GlobalMed"
+    }
+}
