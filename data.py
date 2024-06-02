@@ -1,4 +1,5 @@
 import json
+import os
 
 def wczytaj_dane(plik):
     if not os.path.exists(plik):

@@ -55,16 +55,28 @@ def sprawdzenie_numeru_mikroczipa(klienci):
 
 def dodaj_klienta(klienci, plik):
     id_zwierzecia = generuj_id_zwierzecia(klienci)
-    imie = input("Podaj imię właściciela: ").strip()
-    nazwisko = input("Podaj nazwisko właściciela: ").strip()
+    imie = input("Podaj imię właściciela: ").strip().capitalize()
+    nazwisko = input("Podaj nazwisko właściciela: ").strip().capitalize()
     email = input("Podaj email właściciela: ").strip()
+    while not waliduj_email(email):
+        print("Nieprawidłowy email. Spróbuj ponownie.")
+        email = input("Podaj email właściciela: ").strip()
     telefon = input("Podaj telefon właściciela: ").strip()
-    imie_zwierzecia = input("Podaj imię zwierzęcia: ").strip()
+    while not waliduj_telefon(telefon):
+        print("Nieprawidłowy numer telefonu. Spróbuj ponownie.")
+        telefon = input("Podaj telefon właściciela: ").strip()
+    imie_zwierzecia = input("Podaj imię zwierzęcia: ").strip().capitalize()
     data_urodzenia_zwierzecia = input("Podaj datę urodzenia zwierzęcia (DD.MM.RRRR): ").strip()
-    typ_zwierzecia = input("Podaj typ zwierzęcia (np. kot, pies): ").strip()
-    plec_zwierzecia = input("Podaj płeć zwierzęcia (samiec/samica): ").strip()
-    rasa = input("Podaj rasę zwierzęcia: ").strip()
-    
+    while not waliduj_date(data_urodzenia_zwierzecia):
+        print("Nieprawidłowy format daty. Spróbuj ponownie.")
+        data_urodzenia_zwierzecia = input("Podaj datę urodzenia zwierzęcia (DD.MM.RRRR): ").strip()
+    typ_zwierzecia = input("Podaj typ zwierzęcia (np. kot, pies): ").strip().capitalize()
+    plec_zwierzecia = input("Podaj płeć zwierzęcia (samiec/samica): ").strip().lower()
+    while not waliduj_plec(plec_zwierzecia):
+        print("Nieprawidłowa płeć. Spróbuj ponownie.")
+        plec_zwierzecia = input("Podaj płeć zwierzęcia (samiec/samica): ").strip().lower()
+    rasa = input("Podaj rasę zwierzęcia: ").strip().capitalize()
+
     numer_mikroczipa = sprawdzenie_numeru_mikroczipa(klienci)
 
     klient = {
@@ -87,22 +99,65 @@ def dodaj_klienta(klienci, plik):
     print(f"Klient {imie} {nazwisko} został dodany do bazy danych z ID {id_zwierzecia}.")
 
 def aktualizuj_klienta(klienci, plik):
-    id_zwierzecia = input("Przechodzisz do edycji informacji o zwierzęciu. Jeżeli nie chcesz zmieniać informacji, o którą zostaniesz zapytany, pomiń ją. Podaj ID zwierzęcia do aktualizacji: ").strip()
+    id_zwierzecia = input("Przechodzisz do edycji informacji o zwierzęciu. Podaj ID zwierzęcia do aktualizacji: ").strip()
     klient = znajdz_klienta_po_id(klienci, id_zwierzecia)
     if klient:
-        klient['imie'] = input(f"Podaj nowe imię właściciela ({klient['imie']}): ").strip() or klient['imie']
-        klient['nazwisko'] = input(f"Podaj nowe nazwisko właściciela ({klient['nazwisko']}): ").strip() or klient['nazwisko']
-        klient['email'] = input(f"Podaj nowy email właściciela ({klient['email']}): ").strip() or klient['email']
-        klient['telefon'] = input(f"Podaj nowy telefon właściciela ({klient['telefon']}): ").strip() or klient['telefon']
-        klient['zwierze']['imie_zwierzecia'] = input(f"Podaj nowe imię zwierzęcia ({klient['zwierze']['imie_zwierzecia']}): ").strip() or klient['zwierze']['imie_zwierzecia']
-        klient['zwierze']['data_urodzenia'] = input(f"Podaj nową datę urodzenia zwierzęcia ({klient['zwierze']['data_urodzenia']}): ").strip() or klient['zwierze']['data_urodzenia']
-        klient['zwierze']['typ_zwierzecia'] = input(f"Podaj nowy typ zwierzęcia ({klient['zwierze']['typ_zwierzecia']}): ").strip() or klient['zwierze']['typ_zwierzecia']
-        klient['zwierze']['plec_zwierzecia'] = input(f"Podaj nową płeć zwierzęcia ({klient['zwierze']['plec_zwierzecia']}): ").strip() or klient['zwierze']['plec_zwierzecia']
-        klient['zwierze']['rasa'] = input(f"Podaj nową rasę zwierzęcia ({klient['zwierze']['rasa']}): ").strip() or klient['zwierze']['rasa']
+        nowe_imie = input(f"Podaj nowe imię właściciela ({klient['imie']}): ").strip().capitalize()
+        if nowe_imie:
+            klient['imie'] = nowe_imie
+
+        nowe_nazwisko = input(f"Podaj nowe nazwisko właściciela ({klient['nazwisko']}): ").strip().capitalize()
+        if nowe_nazwisko:
+            klient['nazwisko'] = nowe_nazwisko
+
+        nowy_email = input(f"Podaj nowy email właściciela ({klient['email']}): ").strip()
+        while nowy_email and not waliduj_email(nowy_email):
+            print("Nieprawidłowy email. Spróbuj ponownie.")
+            nowy_email = input(f"Podaj nowy email właściciela ({klient['email']}): ").strip()
+        if nowy_email:
+            klient['email'] = nowy_email
+
+        nowy_telefon = input(f"Podaj nowy telefon właściciela ({klient['telefon']}): ").strip()
+        while nowy_telefon and not waliduj_telefon(nowy_telefon):
+            print("Nieprawidłowy numer telefonu. Spróbuj ponownie.")
+            nowy_telefon = input(f"Podaj nowy telefon właściciela ({klient['telefon']}): ").strip()
+        if nowy_telefon:
+            klient['telefon'] = nowy_telefon
+
+        nowe_imie_zwierzecia = input(f"Podaj nowe imię zwierzęcia ({klient['zwierze']['imie_zwierzecia']}): ").strip().capitalize()
+        if nowe_imie_zwierzecia:
+            klient['zwierze']['imie_zwierzecia'] = nowe_imie_zwierzecia
+
+        nowa_data_urodzenia = input(f"Podaj nową datę urodzenia zwierzęcia ({klient['zwierze']['data_urodzenia']}): ").strip()
+        while nowa_data_urodzenia and not waliduj_date(nowa_data_urodzenia):
+            print("Nieprawidłowy format daty. Spróbuj ponownie.")
+            nowa_data_urodzenia = input(f"Podaj nową datę urodzenia zwierzęcia ({klient['zwierze']['data_urodzenia']}): ").strip()
+        if nowa_data_urodzenia:
+            klient['zwierze']['data_urodzenia'] = nowa_data_urodzenia
+
+        nowy_typ_zwierzecia = input(f"Podaj nowy typ zwierzęcia ({klient['zwierze']['typ_zwierzecia']}): ").strip().capitalize()
+        if nowy_typ_zwierzecia:
+            klient['zwierze']['typ_zwierzecia'] = nowy_typ_zwierzecia
+
+        nowa_plec_zwierzecia = input(f"Podaj nową płeć zwierzęcia ({klient['zwierze']['plec_zwierzecia']}): ").strip().lower()
+        while nowa_plec_zwierzecia and not waliduj_plec(nowa_plec_zwierzecia):
+            print("Nieprawidłowa płeć. Spróbuj ponownie.")
+            nowa_plec_zwierzecia = input(f"Podaj nową płeć zwierzęcia ({klient['zwierze']['plec_zwierzecia']}): ").strip().lower()
+        if nowa_plec_zwierzecia:
+            klient['zwierze']['plec_zwierzecia'] = nowa_plec_zwierzecia
+
+        nowa_rasa = input(f"Podaj nową rasę zwierzęcia ({klient['zwierze']['rasa']}): ").strip().capitalize()
+        if nowa_rasa:
+            klient['zwierze']['rasa'] = nowa_rasa
+
         print(f"Poprzedni numer mikroczipa: {klient['zwierze']['numer_mikroczipa']}")
-        nowy_numer_mikroczipa = sprawdzenie_numeru_mikroczipa(klienci)
-        klient['zwierze']['numer_mikroczipa'] = nowy_numer_mikroczipa
-        
+        nowy_numer_mikroczipa = input("Podaj nowy numer mikroczipa lub naciśnij Enter, aby pozostawić bez zmian: ").strip()
+        while nowy_numer_mikroczipa and (not nowy_numer_mikroczipa.isdigit() or len(nowy_numer_mikroczipa) != 15):
+            print("Numer mikroczipa musi być 15-cyfrowym ciągiem znaków.")
+            nowy_numer_mikroczipa = input("Podaj nowy numer mikroczipa lub naciśnij Enter, aby pozostawić bez zmian: ").strip()
+        if nowy_numer_mikroczipa:
+            klient['zwierze']['numer_mikroczipa'] = nowy_numer_mikroczipa
+
         data.zapisz_dane(plik, klienci)
         print(f"Dane klienta o ID {id_zwierzecia} zostały zaktualizowane.")
     else:
@@ -199,3 +254,21 @@ def wyswietl_liste_klientow(klienci):
                       f"Zwierzę: {zwierze['imie_zwierzecia']}, Data urodzenia: {zwierze['data_urodzenia']}, Wiek w latach: {wiek}, Typ: {zwierze['typ_zwierzecia']}, Płeć: {zwierze['plec_zwierzecia']}, Rasa: {zwierze['rasa']}, Numer mikroczipa: {zwierze['numer_mikroczipa']}")
             else:
                 print("Błąd danych: Niepoprawny format klienta, oczekiwano słownika.")
+
+def waliduj_email(email):
+    if '@' not in email:
+        return False
+    return True
+
+def waliduj_telefon(telefon):
+    return telefon.isdigit()
+
+def waliduj_date(date_text):
+    try:
+        datetime.datetime.strptime(date_text, '%d.%m.%Y')
+        return True
+    except ValueError:
+        return False
+
+def waliduj_plec(plec):
+    return plec.lower() in ['samiec', 'samica']
