@@ -46,11 +46,25 @@ def usun_lek():
 def edytuj_lek():
     leki = wczytaj_leki()
     nazwa = input("Podaj nazwę leku do edytowania: ")
-
-    if nazwa in leki:
-        nowa_ilosc = int(input(f"Podaj nową ilość dla {nazwa}: "))
-        leki[nazwa]["ilosc"] = nowa_ilosc
-        zapisz_leki(leki)
-        print(f"Ilość leku {nazwa} została zaktualizowana.")
+    dokladny_wybor = input("Czy chcesz edytować ilość leku (I) czy zmienić dostawcę leku (D)? (I/D): ").upper()
+    if dokladny_wybor == 'I':
+        if nazwa in leki:
+            nowa_ilosc = int(input(f"Podaj nową ilość dla {nazwa}: "))
+            leki[nazwa]["ilosc"] = nowa_ilosc
+            zapisz_leki(leki)
+            print(f"Ilość leku {nazwa} została zaktualizowana.")
+        else:
+            print("Lek nie istnieje w bazie.")
+    elif dokladny_wybor == 'D':
+        if nazwa in leki:
+            nowy_dostawca = str(input(f"Podaj nowego dostawcę: "))
+            leki[nazwa]["dostawca"] = nowy_dostawca
+            zapisz_leki(leki)
+            print(f"Dostawca leku {nazwa} został zaktualizowany.")
+        else:
+            print("Wystąpił błąd.")
     else:
-        print("Lek nie istnieje w bazie.")
+        print("Nieprawidłowy wybór, spróbuj ponownie.")
+    
+def wyswietl_wszystkie_leki():
+    return 0
