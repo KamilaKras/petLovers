@@ -14,11 +14,11 @@ def przeliczanie_ceny (cena_netto):
 
 def dodaj_wizyte(klienci):
 
-    data = input("Data wizyty: (DD.MM.YYYY): ").strip() or None
-    pacjent_id = input("ID pacjenta: ").strip() or None
-    choroba = input("Choroba: ").strip() or None
-    leki = input("Leki: ").strip() or None
-    dawkowanie = input("Dawkowanie: ").strip() or None
+    data = input("Data wizyty: (DD.MM.YYYY): ").strip() or None 
+    pacjent_id = input("ID pacjenta: ").strip() or None 
+    choroba = input("Choroba: ").strip() or None 
+    leki = input("Leki: ").strip() or None 
+    dawkowanie = input("Dawkowanie: ").strip() or None 
     notatki = input("Dodatkowe informacje: ").strip() or None
     cena_netto_input = input("Cena netto: ").strip()  # Pobranie ceny netto
     cena_netto = float(cena_netto_input) if cena_netto_input else "Brak danych" 
@@ -79,9 +79,9 @@ def wyswietl_wszystkie_wizyty(plik_wizyt):
             print("Wszystkie zarejestrowane wizyty:")
             for id_wizyty, wizyta in wizyty.items():
                 recepta = wizyta['Recepta']
-                print(f"Wizyta ID: {id_wizyty}, Data: {wizyta['Data wizyty']}, Pacjent ID: {wizyta['Pacjent']}, Choroba: {wizyta['Choroba']}, "
-                        f"Leki: {recepta['Leki']}, Dawkowanie: {recepta['Dawkowanie']}, "
-                        f"Dodatkowe informacje: {wizyta['Dodatkowe informacje']}, Cena brutto: {wizyta['Cena brutto']}")
+                print(f"Wizyta ID: {id_wizyty}, Data: {zamien_none_na_brak_danych(wizyta['Data wizyty'])}, Pacjent ID: {zamien_none_na_brak_danych(wizyta['Pacjent'])}, Choroba: {zamien_none_na_brak_danych(wizyta['Choroba'])}, "
+                        f"Leki: {zamien_none_na_brak_danych(recepta['Leki'])}, Dawkowanie: {zamien_none_na_brak_danych(recepta['Dawkowanie'])}, "
+                        f"Dodatkowe informacje: {zamien_none_na_brak_danych(wizyta['Dodatkowe informacje'])}, Cena brutto: {wizyta['Cena brutto']}")
     except json.JSONDecodeError:
         print("Błąd podczas wczytywania danych wizyt.")
 
@@ -102,10 +102,13 @@ def wyswietl_wizyty_pacjenta(plik_wizyt, id_pacjenta):
                 if wizyta['Pacjent'] == id_pacjenta:
                     znaleziono_wizyty = True
                     recepta = wizyta['Recepta']
-                    print(f"Wizyta ID: {id_wizyty}, Data: {wizyta['Data wizyty']}, Choroba: {wizyta['Choroba']}, "
-                          f"Leki: {recepta['Leki']}, Dawkowanie: {recepta['Dawkowanie']}, "
-                          f"Dodatkowe informacje: {wizyta['Dodatkowe informacje']}, Cena brutto: {wizyta['Cena brutto']}")
+                    print(f"Wizyta ID: {id_wizyty}, Data: {zamien_none_na_brak_danych(wizyta['Data wizyty'])}, Choroba: {zamien_none_na_brak_danych(wizyta['Choroba'])}, "
+                          f"Leki: {zamien_none_na_brak_danych(recepta['Leki'])}, Dawkowanie: {zamien_none_na_brak_danych(recepta['Dawkowanie'])}, "
+                          f"Dodatkowe informacje: {zamien_none_na_brak_danych(wizyta['Dodatkowe informacje'])}, Cena brutto: {wizyta['Cena brutto']}")
             if not znaleziono_wizyty:
                 print("Nie znaleziono wizyt dla tego pacjenta.")
     except json.JSONDecodeError:
         print("Błąd podczas wczytywania danych wizyt.")
+
+def zamien_none_na_brak_danych(wartosc):
+    return "Brak danych" if wartosc is None else wartosc
