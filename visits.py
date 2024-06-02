@@ -3,7 +3,8 @@ import os
 import clients
 
 def przeliczanie_ceny (cena_netto):
-
+    if isinstance(cena_netto, str) and cena_netto == "Brak danych":
+        return "Brak danych"
     cena_brutto = cena_netto * 1.08
     cena_brutto = round(cena_brutto, 2)
     cena_brutto = str(cena_brutto)
@@ -13,13 +14,14 @@ def przeliczanie_ceny (cena_netto):
 
 def dodaj_wizyte(klienci):
 
-    data = input("Data wizyty: (DD.MM.YYYY): ")
-    pacjent_id = input("ID pacjenta: ")
-    choroba = input("Choroba: ")
-    leki = input("Leki: ")
-    dawkowanie = input("Dawkowanie: ")
-    notatki = input("Dodatkowe informacje: ")
-    cena_netto = float(input("Cena netto: "))
+    data = input("Data wizyty: (DD.MM.YYYY): ").strip() or None
+    pacjent_id = input("ID pacjenta: ").strip() or None
+    choroba = input("Choroba: ").strip() or None
+    leki = input("Leki: ").strip() or None
+    dawkowanie = input("Dawkowanie: ").strip() or None
+    notatki = input("Dodatkowe informacje: ").strip() or None
+    cena_netto_input = input("Cena netto: ").strip()  # Pobranie ceny netto
+    cena_netto = float(cena_netto_input) if cena_netto_input else "Brak danych" 
     cena_brutto = przeliczanie_ceny(cena_netto)
 
     pacjent = clients.znajdz_klienta_po_id(klienci, pacjent_id)
