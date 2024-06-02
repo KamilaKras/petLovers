@@ -7,10 +7,11 @@
         "telefon": "987657389",
         "zwierze": {
             "imie_zwierzecia": "Burek",
-            "wiek_zwierzecia": "10",
+            "data_urodzenia": "10.10.2021",
             "typ_zwierzecia": "kot",
             "plec_zwierzecia": "samiec",
-            "rasa": "owczarek"
+            "rasa": "owczarek",
+            "numer_mikroczipa": "123456789129356"
         }
     },
     {
@@ -21,10 +22,11 @@
         "telefon": "937483772",
         "zwierze": {
             "imie_zwierzecia": "BUREK2",
-            "wiek_zwierzecia": "2",
+            "data_urodzenia": "10.10.2021",
             "typ_zwierzecia": "PIES",
             "plec_zwierzecia": "SAMIEC",
-            "rasa": "KUNDELEK"
+            "rasa": "KUNDELEK",
+            "numer_mikroczipa": "129405829345697"
         }
     }
 ]
