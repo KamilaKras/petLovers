@@ -9,8 +9,13 @@ import data
 # Test dla funkcji przeliczanie_ceny
 def test_przeliczanie_ceny():
     # Sprawdzenie poprawnosci obliczen
-    assert visits.przeliczanie_ceny(100) == 123, "Błąd: nieprawidłowe obliczenie ceny brutto dla 100"
-    assert visits.przeliczanie_ceny(200) == 246, "Błąd: nieprawidłowe obliczenie ceny brutto dla 200"
+    result1 = visits.przeliczanie_ceny(100)
+    result2 = visits.przeliczanie_ceny(200)
+    result3 = visits.przeliczanie_ceny("Brak danych")
+    
+    assert result1 == "108,00 zł", f"Błąd: nieprawidłowe obliczenie ceny brutto dla 100, wynik: {result1}"
+    assert result2 == "216,00 zł", f"Błąd: nieprawidłowe obliczenie ceny brutto dla 200, wynik: {result2}"
+    assert result3 == "Brak danych", f"Błąd: nieprawidłowe obliczenie ceny brutto dla 'Brak danych', wynik: {result3}"
 
 # Test dla funkcji wczytaj_dane
 def test_wczytaj_dane():
@@ -50,19 +55,23 @@ def test_znajdz_klienta_po_id():
 def test_dodaj_wizyte():
     klienci = [{'id_zwierzecia': '001', 'imie': 'Jan'}]
     
-    user_inputs = ['19.02.2019', '001', 'katar', 'aspiryna', '100']
+    user_inputs = ['19.02.2019', '001', 'katar', 'aspiryna', '', '', '100']
     expected_output = {
         'Data wizyty': '19.02.2019', 
         'Pacjent': '001', 
         'Choroba': 'katar', 
-        'Leki': 'aspiryna', 
+        'Recepta': {
+            'Leki': 'aspiryna', 
+            'Dawkowanie': "Brak danych"
+        },
+        'Dodatkowe informacje': "Brak danych",
         'Cena netto': 100.0, 
-        'Cena brutto': 123.0
+        'Cena brutto': '108,00 zł'
     }
     
     with patch('builtins.input', side_effect=user_inputs), patch('clients.znajdz_klienta_po_id', return_value=klienci[0]):
         result = visits.dodaj_wizyte(klienci)
-        assert result == expected_output, "Test failed: dodaj_wizyte did not return expected dictionary."
+        assert result == expected_output, f"Test failed: dodaj_wizyte did not return expected dictionary. Wynik: {result}"
 
 # Test dla funkcji zapisz_wizyte
 def test_zapisz_wizyte():
@@ -70,9 +79,13 @@ def test_zapisz_wizyte():
         'Data wizyty': '20.02.2019', 
         'Pacjent': '002', 
         'Choroba': 'grypa', 
-        'Leki': 'ibuprofen', 
-        'Cena netto': 150, 
-        'Cena brutto': 184.5
+        'Recepta': {
+            'Leki': 'ibuprofen', 
+            'Dawkowanie': "Brak danych"
+        },
+        'Dodatkowe informacje': "Brak danych", 
+        'Cena netto': 150.0, 
+        'Cena brutto': '162,00 zł'
     }
     plik_wizyt = 'wizyty.json'
     mock_file = mock_open(read_data="")  # Symuluj pusty plik
@@ -88,27 +101,61 @@ def test_zapisz_wizyte():
 # Test dla funkcji wyswietl_wszystkie_wizyty
 def test_wyswietl_wszystkie_wizyty():
     sample_data = {
-        '1': {'Data wizyty': '20.02.2019', 'Pacjent': '001', 'Choroba': 'grypa', 'Leki': 'ibuprofen', 'Cena brutto': 184.5}
+        '1': {
+            'Data wizyty': '20.02.2019', 
+            'Pacjent': '001', 
+            'Choroba': 'grypa', 
+            'Recepta': {
+                'Leki': 'ibuprofen', 
+                'Dawkowanie': "Brak danych"
+            },
+            'Dodatkowe informacje': "Brak danych", 
+            'Cena netto': 150.0, 
+            'Cena brutto': '162,00 zł'
+        }
     }
-    expected_output = "Wszystkie zarejestrowane wizyty:\nWizyta ID: 1, Data: 20.02.2019, Pacjent ID: 001, Choroba: grypa, Leki: ibuprofen, Cena brutto: 184.5\n"
+    expected_output = "Wszystkie zarejestrowane wizyty:\nWizyta ID: 1, Data: 20.02.2019, Pacjent ID: 001, Choroba: grypa, Leki: ibuprofen, Dawkowanie: Brak danych, Dodatkowe informacje: Brak danych, Cena brutto: 162,00 zł\n"
     
     mock_file = mock_open(read_data=json.dumps(sample_data))
     with patch('builtins.open', mock_file), patch('sys.stdout', new=io.StringIO()) as fake_out:
         visits.wyswietl_wszystkie_wizyty('wizyty.json')
-        assert fake_out.getvalue() == expected_output, "Test failed: Output not as expected."
+        assert fake_out.getvalue() == expected_output, f"Test failed: Output not as expected. Output: {fake_out.getvalue()}"
+
 
 # Test dla funkcji wyswietl_wizyty_pacjenta
 def test_wyswietl_wizyty_pacjenta():
     sample_data = {
-        '1': {'Data wizyty': '20.02.2019', 'Pacjent': '001', 'Choroba': 'grypa', 'Leki': 'ibuprofen', 'Cena brutto': 184.5},
-        '2': {'Data wizyty': '21.02.2019', 'Pacjent': '002', 'Choroba': 'katar', 'Leki': 'paracetamol', 'Cena brutto': 123.0}
+        '1': {
+            'Data wizyty': '20.02.2019', 
+            'Pacjent': '001', 
+            'Choroba': 'grypa', 
+            'Recepta': {
+                'Leki': 'ibuprofen', 
+                'Dawkowanie': "Brak danych"
+            },
+            'Dodatkowe informacje': "Brak danych", 
+            'Cena netto': 150.0, 
+            'Cena brutto': '162,00 zł'
+        },
+        '2': {
+            'Data wizyty': '21.02.2019', 
+            'Pacjent': '002', 
+            'Choroba': 'katar', 
+            'Recepta': {
+                'Leki': 'paracetamol', 
+                'Dawkowanie': "Brak danych"
+            },
+            'Dodatkowe informacje': "Brak danych", 
+            'Cena netto': 123.0, 
+            'Cena brutto': '132,84 zł'
+        }
     }
-    expected_output = "Wizyty dla pacjenta o ID 001:\nWizyta ID: 1, Data: 20.02.2019, Choroba: grypa, Leki: ibuprofen, Cena brutto: 184.5\n"
+    expected_output = "Wizyty dla pacjenta o ID 001:\nWizyta ID: 1, Data: 20.02.2019, Choroba: grypa, Leki: ibuprofen, Dawkowanie: Brak danych, Dodatkowe informacje: Brak danych, Cena netto: 150.0, Cena brutto: 162,00 zł\n"
     
     mock_file = mock_open(read_data=json.dumps(sample_data))
     with patch('builtins.open', mock_file), patch('sys.stdout', new=io.StringIO()) as fake_out:
         visits.wyswietl_wizyty_pacjenta('wizyty.json', '001')
-        assert fake_out.getvalue() == expected_output, "Test failed: Output for specific patient not as expected."
+        assert fake_out.getvalue() == expected_output, f"Test failed: Output for specific patient not as expected. Output: {fake_out.getvalue()}"
 
 # Wywołanie testów
 test_wczytaj_dane()

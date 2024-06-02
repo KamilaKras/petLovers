@@ -6,22 +6,21 @@ def przeliczanie_ceny (cena_netto):
     if isinstance(cena_netto, str) and cena_netto == "Brak danych":
         return "Brak danych"
     cena_brutto = cena_netto * 1.08
-    cena_brutto = round(cena_brutto, 2)
-    cena_brutto = str(cena_brutto)
+    cena_brutto = f"{cena_brutto:.2f}"
     cena_brutto = cena_brutto.replace('.', ',')
     cena_brutto = f"{cena_brutto} zł"
     return cena_brutto
 
 def dodaj_wizyte(klienci):
 
-    data = input("Data wizyty: (DD.MM.YYYY): ").strip() or None 
-    pacjent_id = input("ID pacjenta: ").strip() or None 
-    choroba = input("Choroba: ").strip() or None 
-    leki = input("Leki: ").strip() or None 
-    dawkowanie = input("Dawkowanie: ").strip() or None 
-    notatki = input("Dodatkowe informacje: ").strip() or None
+    data = input("Data wizyty: (DD.MM.YYYY): ").strip() or "Brak danych"
+    pacjent_id = input("ID pacjenta: ").strip() or "Brak danych"
+    choroba = input("Choroba: ").strip() or "Brak danych"
+    leki = input("Leki: ").strip() or "Brak danych"
+    dawkowanie = input("Dawkowanie: ").strip() or "Brak danych"
+    notatki = input("Dodatkowe informacje: ").strip() or "Brak danych"
     cena_netto_input = input("Cena netto: ").strip()  # Pobranie ceny netto
-    cena_netto = float(cena_netto_input) if cena_netto_input else "Brak danych" 
+    cena_netto = float(cena_netto_input) if cena_netto_input else "Brak danych"
     cena_brutto = przeliczanie_ceny(cena_netto)
 
     pacjent = clients.znajdz_klienta_po_id(klienci, pacjent_id)
@@ -30,17 +29,17 @@ def dodaj_wizyte(klienci):
         return None
 
     wizyta = {
-            "Data wizyty": data, 
-            "Pacjent": pacjent_id,
-            "Choroba": choroba, 
-            "Recepta": {
-                "Leki": leki, 
-                "Dawkowanie": dawkowanie
-                },
-            "Dodatkowe informacje": notatki,
-            "Cena netto": cena_netto,
-            "Cena brutto": cena_brutto
-            }
+        "Data wizyty": data,
+        "Pacjent": pacjent_id,
+        "Choroba": choroba,
+        "Recepta": {
+            "Leki": leki,
+            "Dawkowanie": dawkowanie
+        },
+        "Dodatkowe informacje": notatki,
+        "Cena netto": cena_netto,
+        "Cena brutto": cena_brutto
+    }
 
     return wizyta
 
@@ -96,19 +95,20 @@ def wyswietl_wizyty_pacjenta(plik_wizyt, id_pacjenta):
         if not wizyty:
             print("Brak zapisanych wizyt.")
         else:
-            print(f"Wizyty dla pacjenta o ID {id_pacjenta}:")
-            znaleziono_wizyty = False
-            for id_wizyty, wizyta in wizyty.items():
-                if wizyta['Pacjent'] == id_pacjenta:
-                    znaleziono_wizyty = True
+            wizyty_pacjenta = [wizyta for wizyta in wizyty.values() if wizyta['Pacjent'] == id_pacjenta]
+            if not wizyty_pacjenta:
+                print(f"Brak wizyt dla pacjenta o ID {id_pacjenta}.")
+            else:
+                print(f"Wizyty dla pacjenta o ID {id_pacjenta}:")
+                for id_wizyty, wizyta in enumerate(wizyty_pacjenta, start=1):
                     recepta = wizyta['Recepta']
                     print(f"Wizyta ID: {id_wizyty}, Data: {zamien_none_na_brak_danych(wizyta['Data wizyty'])}, Choroba: {zamien_none_na_brak_danych(wizyta['Choroba'])}, "
                           f"Leki: {zamien_none_na_brak_danych(recepta['Leki'])}, Dawkowanie: {zamien_none_na_brak_danych(recepta['Dawkowanie'])}, "
-                          f"Dodatkowe informacje: {zamien_none_na_brak_danych(wizyta['Dodatkowe informacje'])}, Cena brutto: {wizyta['Cena brutto']}")
-            if not znaleziono_wizyty:
-                print("Nie znaleziono wizyt dla tego pacjenta.")
+                          f"Dodatkowe informacje: {zamien_none_na_brak_danych(wizyta['Dodatkowe informacje'])}, Cena netto: {zamien_none_na_brak_danych(wizyta['Cena netto'])}, Cena brutto: {zamien_none_na_brak_danych(wizyta['Cena brutto'])}")
     except json.JSONDecodeError:
         print("Błąd podczas wczytywania danych wizyt.")
 
 def zamien_none_na_brak_danych(wartosc):
-    return "Brak danych" if wartosc is None else wartosc
+    if wartosc is None or wartosc == "None":
+        return "Brak danych"
+    return wartosc
