@@ -33,7 +33,8 @@ def dodaj_klienta(klienci, plik):
     email = input("Podaj email właściciela: ")
     telefon = input("Podaj telefon właściciela: ")
     imie_zwierzecia = input("Podaj imię zwierzęcia: ")
-    wiek_zwierzecia = input("Podaj wiek zwierzęcia: ")
+    wiek_zwierzecia = input("Podaj wiek zwierzęcia w latach: ")
+    typ_zwierzecia = input("Podaj typ zwierzęcia (np. kot, pies): ")
     rasa = input("Podaj rasę zwierzęcia: ")
 
     klient = {
@@ -45,6 +46,7 @@ def dodaj_klienta(klienci, plik):
         "zwierze": {
             "imie_zwierzecia": imie_zwierzecia,
             "wiek_zwierzecia": wiek_zwierzecia,
+            "typ_zwierzecia": typ_zwierzecia,
             "rasa": rasa
         }
     }
@@ -53,7 +55,7 @@ def dodaj_klienta(klienci, plik):
     print(f"Klient {imie} {nazwisko} został dodany do bazy danych z ID {id_zwierzecia}.")
 
 def aktualizuj_klienta(klienci, plik):
-    id_zwierzecia = input("Podaj ID zwierzęcia do aktualizacji: ")
+    id_zwierzecia = input("Przechodzisz do edycji informacji o zwierzęciu. Jeżeli nie chcesz zmieniać informacji, o którą zostaniesz zapytany, pomiń ją. Podaj ID zwierzęcia do aktualizacji: ")
     klient = znajdz_klienta_po_id(klienci, id_zwierzecia)
     if klient:
         klient['imie'] = input(f"Podaj nowe imię właściciela ({klient['imie']}): ") or klient['imie']
@@ -62,6 +64,7 @@ def aktualizuj_klienta(klienci, plik):
         klient['telefon'] = input(f"Podaj nowy telefon właściciela ({klient['telefon']}): ") or klient['telefon']
         klient['zwierze']['imie_zwierzecia'] = input(f"Podaj nowe imię zwierzęcia ({klient['zwierze']['imie_zwierzecia']}): ") or klient['zwierze']['imie_zwierzecia']
         klient['zwierze']['wiek_zwierzecia'] = input(f"Podaj nowy wiek zwierzęcia ({klient['zwierze']['wiek_zwierzecia']}): ") or klient['zwierze']['wiek_zwierzecia']
+        klient['zwierze']['typ_zwierzecia'] = input(f"Podaj nowy typ zwierzęcia ({klient['zwierze']['typ_zwierzecia']}): ") or klient['zwierze']['typ_zwierzecia']
         klient['zwierze']['rasa'] = input(f"Podaj nową rasę zwierzęcia ({klient['zwierze']['rasa']}): ") or klient['zwierze']['rasa']
         
         zapisz_dane(plik, klienci)
@@ -78,6 +81,12 @@ def wyswietl_liste_klientow(klienci):
             print(f"ID: {klient['id_zwierzecia']}, Imię: {klient['imie']}, Nazwisko: {klient['nazwisko']}, "
                   f"Email: {klient['email']}, Telefon: {klient['telefon']}, "
                   f"Zwierzę: {zwierze['imie_zwierzecia']}, Wiek: {zwierze['wiek_zwierzecia']}, Rasa: {zwierze['rasa']}")
+            
+            # UWAGA - tą funkcję należy powiązać z resztą kodu
+def przeliczanie_ceny (cena_netto):
+
+    cena_brutto = cena_netto * 1.23
+    return cena_brutto
 
 def main():
     plik = 'clients.json'
@@ -108,3 +117,9 @@ def main():
 if __name__ == "__main__":
     main()
     
+
+
+#Funkcje do napisania:
+#Obliczanie ceny brutto na podstawie ceny netto - WERONIKA
+#Dodawanie pacjentów - Andrzej
+#Dodawanie informacji o wizycie (kiedy, kto, co, jakie leki zapisane + cena za zabieg powiazania z obliczeniem ceny brutto) - Lena
