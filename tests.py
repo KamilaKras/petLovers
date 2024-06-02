@@ -102,19 +102,19 @@ def test_zapisz_wizyte():
 def test_wyswietl_wszystkie_wizyty():
     sample_data = {
         '1': {
-            'Data wizyty': '20.02.2019', 
-            'Pacjent': '001', 
-            'Choroba': 'grypa', 
+            'Data wizyty': '20.02.2019',
+            'Pacjent': '001',
+            'Choroba': 'grypa',
             'Recepta': {
-                'Leki': 'ibuprofen', 
+                'Leki': 'ibuprofen',
                 'Dawkowanie': "Brak danych"
             },
-            'Dodatkowe informacje': "Brak danych", 
-            'Cena netto': 150.0, 
+            'Dodatkowe informacje': "Brak danych",
+            'Cena netto': 150.0,
             'Cena brutto': '162,00 zł'
         }
     }
-    expected_output = "Wszystkie zarejestrowane wizyty:\nWizyta ID: 1, Data: 20.02.2019, Pacjent ID: 001, Choroba: grypa, Leki: ibuprofen, Dawkowanie: Brak danych, Dodatkowe informacje: Brak danych, Cena brutto: 162,00 zł\n"
+    expected_output = "Wszystkie zarejestrowane wizyty:\nWizyta ID: 1, Data: 20.02.2019, Pacjent ID: 001, Choroba: grypa, Leki: ibuprofen, Dawkowanie: Brak danych, Dodatkowe informacje: Brak danych, Cena netto: 150,00 zł, Cena brutto: 162,00 zł\n"
     
     mock_file = mock_open(read_data=json.dumps(sample_data))
     with patch('builtins.open', mock_file), patch('sys.stdout', new=io.StringIO()) as fake_out:
@@ -126,31 +126,31 @@ def test_wyswietl_wszystkie_wizyty():
 def test_wyswietl_wizyty_pacjenta():
     sample_data = {
         '1': {
-            'Data wizyty': '20.02.2019', 
-            'Pacjent': '001', 
-            'Choroba': 'grypa', 
+            'Data wizyty': '20.02.2019',
+            'Pacjent': '001',
+            'Choroba': 'grypa',
             'Recepta': {
-                'Leki': 'ibuprofen', 
+                'Leki': 'ibuprofen',
                 'Dawkowanie': "Brak danych"
             },
-            'Dodatkowe informacje': "Brak danych", 
-            'Cena netto': 150.0, 
+            'Dodatkowe informacje': "Brak danych",
+            'Cena netto': 150.0,
             'Cena brutto': '162,00 zł'
         },
         '2': {
-            'Data wizyty': '21.02.2019', 
-            'Pacjent': '002', 
-            'Choroba': 'katar', 
+            'Data wizyty': '21.02.2019',
+            'Pacjent': '002',
+            'Choroba': 'katar',
             'Recepta': {
-                'Leki': 'paracetamol', 
+                'Leki': 'paracetamol',
                 'Dawkowanie': "Brak danych"
             },
-            'Dodatkowe informacje': "Brak danych", 
-            'Cena netto': 123.0, 
+            'Dodatkowe informacje': "Brak danych",
+            'Cena netto': 123.0,
             'Cena brutto': '132,84 zł'
         }
     }
-    expected_output = "Wizyty dla pacjenta o ID 001:\nWizyta ID: 1, Data: 20.02.2019, Choroba: grypa, Leki: ibuprofen, Dawkowanie: Brak danych, Dodatkowe informacje: Brak danych, Cena netto: 150.0, Cena brutto: 162,00 zł\n"
+    expected_output = "Wizyty dla pacjenta o ID 001:\nWizyta ID: 1, Data: 20.02.2019, Choroba: grypa, Leki: ibuprofen, Dawkowanie: Brak danych, Dodatkowe informacje: Brak danych, Cena netto: 150,00 zł, Cena brutto: 162,00 zł\n"
     
     mock_file = mock_open(read_data=json.dumps(sample_data))
     with patch('builtins.open', mock_file), patch('sys.stdout', new=io.StringIO()) as fake_out:

@@ -79,8 +79,8 @@ def wyswietl_wszystkie_wizyty(plik_wizyt):
             for id_wizyty, wizyta in wizyty.items():
                 recepta = wizyta['Recepta']
                 print(f"Wizyta ID: {id_wizyty}, Data: {zamien_none_na_brak_danych(wizyta['Data wizyty'])}, Pacjent ID: {zamien_none_na_brak_danych(wizyta['Pacjent'])}, Choroba: {zamien_none_na_brak_danych(wizyta['Choroba'])}, "
-                        f"Leki: {zamien_none_na_brak_danych(recepta['Leki'])}, Dawkowanie: {zamien_none_na_brak_danych(recepta['Dawkowanie'])}, "
-                        f"Dodatkowe informacje: {zamien_none_na_brak_danych(wizyta['Dodatkowe informacje'])}, Cena brutto: {wizyta['Cena brutto']}")
+                      f"Leki: {zamien_none_na_brak_danych(recepta['Leki'])}, Dawkowanie: {zamien_none_na_brak_danych(recepta['Dawkowanie'])}, "
+                      f"Dodatkowe informacje: {zamien_none_na_brak_danych(wizyta['Dodatkowe informacje'])}, Cena netto: {formatuj_cene(wizyta['Cena netto'])}, Cena brutto: {wizyta['Cena brutto']}")
     except json.JSONDecodeError:
         print("Błąd podczas wczytywania danych wizyt.")
 
@@ -95,16 +95,13 @@ def wyswietl_wizyty_pacjenta(plik_wizyt, id_pacjenta):
         if not wizyty:
             print("Brak zapisanych wizyt.")
         else:
-            wizyty_pacjenta = [wizyta for wizyta in wizyty.values() if wizyta['Pacjent'] == id_pacjenta]
-            if not wizyty_pacjenta:
-                print(f"Brak wizyt dla pacjenta o ID {id_pacjenta}.")
-            else:
-                print(f"Wizyty dla pacjenta o ID {id_pacjenta}:")
-                for id_wizyty, wizyta in enumerate(wizyty_pacjenta, start=1):
+            print(f"Wizyty dla pacjenta o ID {id_pacjenta}:")
+            for id_wizyty, wizyta in wizyty.items():
+                if wizyta['Pacjent'] == id_pacjenta:
                     recepta = wizyta['Recepta']
                     print(f"Wizyta ID: {id_wizyty}, Data: {zamien_none_na_brak_danych(wizyta['Data wizyty'])}, Choroba: {zamien_none_na_brak_danych(wizyta['Choroba'])}, "
                           f"Leki: {zamien_none_na_brak_danych(recepta['Leki'])}, Dawkowanie: {zamien_none_na_brak_danych(recepta['Dawkowanie'])}, "
-                          f"Dodatkowe informacje: {zamien_none_na_brak_danych(wizyta['Dodatkowe informacje'])}, Cena netto: {zamien_none_na_brak_danych(wizyta['Cena netto'])}, Cena brutto: {zamien_none_na_brak_danych(wizyta['Cena brutto'])}")
+                          f"Dodatkowe informacje: {zamien_none_na_brak_danych(wizyta['Dodatkowe informacje'])}, Cena netto: {formatuj_cene(wizyta['Cena netto'])}, Cena brutto: {wizyta['Cena brutto']}")
     except json.JSONDecodeError:
         print("Błąd podczas wczytywania danych wizyt.")
 
@@ -112,3 +109,9 @@ def zamien_none_na_brak_danych(wartosc):
     if wartosc is None or wartosc == "None":
         return "Brak danych"
     return wartosc
+
+def formatuj_cene(cena):
+    if cena == "Brak danych":
+        return cena
+    cena = f"{cena:.2f}".replace('.', ',')
+    return f"{cena} zł"

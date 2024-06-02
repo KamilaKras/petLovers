@@ -12,5 +12,19 @@
             "plec_zwierzecia": "samiec",
             "rasa": "owczarek"
         }
+    },
+    {
+        "id_zwierzecia": "002",
+        "imie": "SS",
+        "nazwisko": "DFS",
+        "email": "DQSF",
+        "telefon": "937483772",
+        "zwierze": {
+            "imie_zwierzecia": "BUREK2",
+            "wiek_zwierzecia": "2",
+            "typ_zwierzecia": "PIES",
+            "plec_zwierzecia": "SAMIEC",
+            "rasa": "KUNDELEK"
+        }
     }
 ]

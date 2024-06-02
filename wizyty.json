@@ -1,3 +1,26 @@
 {
-
+    "1": {
+        "Data wizyty": "02.06.2024",
+        "Pacjent": "001",
+        "Choroba": "NS",
+        "Recepta": {
+            "Leki": "Brak danych",
+            "Dawkowanie": "Brak danych"
+        },
+        "Dodatkowe informacje": "Brak danych",
+        "Cena netto": "Brak danych",
+        "Cena brutto": "Brak danych"
+    },
+    "2": {
+        "Data wizyty": "09.10.2023",
+        "Pacjent": "001",
+        "Choroba": "WW",
+        "Recepta": {
+            "Leki": "Brak danych",
+            "Dawkowanie": "Brak danych"
+        },
+        "Dodatkowe informacje": "Brak danych",
+        "Cena netto": 100.0,
+        "Cena brutto": "108,00 z\u0142"
+    }
 }
