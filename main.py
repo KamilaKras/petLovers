@@ -6,7 +6,7 @@ import visits
 import data
 
 #to do leków
-LEKI_FILE_PATH = os.path.join(os.path.dirname(__file__), 'leki.json')
+#LEKI_FILE_PATH = os.path.join(os.path.dirname(__file__), 'leki.json')
 def main():
     plik = 'clients.json'
     klienci = data.wczytaj_dane(plik)
