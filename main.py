@@ -13,10 +13,10 @@ def main():
     while True:
         print("\n1. Dodaj/Zaktualizuj dane klienta")
         print("2. Wyświetl listę klientów")
-        print("3. Dodaj wizytę")
-        print("4. Wyświetl wszystkie wizyty")
-        print("5. Wyświetl wizyty konkretnego pacjenta")
-        print("6. Dodaj wizytę")
+        print("3. Znajdź pacjenta, wyświetl wizyty i dodaj wizytę")
+        print("4. Znajdź po mikroczipie")
+        print("5. Wyświetl wszystkie wizyty")
+        print("6. Dodaj nową wizytę dla dowolnego pacjenta")
         print("7. Dodaj lek")
         print("8. Usuń lek")
         print("9. Edytuj lek")
@@ -40,9 +40,8 @@ def main():
                 print("Wybierz opcję:\n1. Dodaj wizytę\n2. Wyświetl wszystkie wizyty pacjenta")
                 pod_wybor = input("Wybierz opcję (1/2): ").strip()
                 if pod_wybor == '1':
-                    wizyta = visits.dodaj_wizyte(klienci)
+                    wizyta = visits.dodaj_wizyte(klienci, znaleziony_klient['id_zwierzecia'])
                     if wizyta:
-                        wizyta['id_pacjenta'] = znaleziony_klient['id_zwierzecia']
                         visits.zapisz_wizyte(wizyta, plik_wizyt)
                         print("Dodano nową wizytę")
                 elif pod_wybor == '2':

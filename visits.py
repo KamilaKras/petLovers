@@ -1,6 +1,14 @@
+import datetime
 import json
 import os
 import clients
+
+def waliduj_date(date_text):
+    try:
+        data_wizyty = datetime.datetime.strptime(date_text, '%d.%m.%Y')
+        return data_wizyty
+    except ValueError:
+        return None
 
 def przeliczanie_ceny (cena_netto):
     if isinstance(cena_netto, str) and cena_netto == "Brak danych":
@@ -11,24 +19,40 @@ def przeliczanie_ceny (cena_netto):
     cena_brutto = f"{cena_brutto} zł"
     return cena_brutto
 
-def dodaj_wizyte(klienci):
-    data = input("Data wizyty: (DD.MM.YYYY): ").strip() or "Brak danych"
-    pacjent_id = input("ID pacjenta: ").strip() or "Brak danych"
+def dodaj_wizyte(klienci, pacjent_id):
+    data_wizyty = input("Data wizyty (DD.MM.RRRR): ").strip()
+    data_wizyty_obj = waliduj_date(data_wizyty)
+    while not data_wizyty_obj:
+        print("Nieprawidłowy format daty. Spróbuj ponownie.")
+        data_wizyty = input("Data wizyty (DD.MM.RRRR): ").strip()
+        data_wizyty_obj = waliduj_date(data_wizyty)
+
+    if data_wizyty_obj.date() > datetime.date.today():
+        potwierdzenie = input("Podana data jest w przyszłości. Czy na pewno chcesz kontynuować? (tak/nie): ").strip().lower()
+        if potwierdzenie != 'tak':
+            print("Anulowano dodawanie wizyty.")
+            return
+
+    pacjent = clients.znajdz_klienta_po_id(klienci, pacjent_id)
+    if not pacjent:
+        print("Nie znaleziono pacjenta o podanym ID. Anulowano dodawanie wizyty.")
+        return
+
     choroba = input("Choroba: ").strip() or "Brak danych"
     leki = input("Leki: ").strip() or "Brak danych"
     dawkowanie = input("Dawkowanie: ").strip() or "Brak danych"
     notatki = input("Dodatkowe informacje: ").strip() or "Brak danych"
-    cena_netto_input = input("Cena netto: ").strip().replace(',', '.')  # Pobranie ceny netto
-    cena_netto = float(cena_netto_input) if cena_netto_input else "Brak danych"
+
+    cena_netto_input = input("Cena netto: ").strip().replace(',', '.')
+    try:
+        cena_netto = float(cena_netto_input) if cena_netto_input else "Brak danych"
+    except ValueError:
+        cena_netto = "Brak danych"
+
     cena_brutto = przeliczanie_ceny(cena_netto)
 
-    pacjent = clients.znajdz_klienta_po_id(klienci, pacjent_id)
-    if not pacjent:
-        print("Nie znaleziono pacjenta.")
-        return None
-
     wizyta = {
-        "Data wizyty": data,
+        "Data wizyty": data_wizyty,
         "Pacjent": pacjent_id,
         "Choroba": choroba,
         "Recepta": {
@@ -41,6 +65,25 @@ def dodaj_wizyte(klienci):
     }
 
     return wizyta
+
+def zapisz_wizyte(wizyta, plik_wizyt):
+    try:
+        if os.path.exists(plik_wizyt):
+            with open(plik_wizyt, 'r') as file:
+                wizyty = json.load(file)
+        else:
+            wizyty = {}
+    except json.JSONDecodeError:
+        print("Plik JSON jest pusty lub uszkodzony. Tworzenie nowego pliku.")
+        wizyty = {}
+
+    wizyta_id = len(wizyty) + 1
+    wizyty[wizyta_id] = wizyta
+
+    with open(plik_wizyt, 'w') as file:
+        json.dump(wizyty, file, indent=4)
+
+    print(f"Dodano wizytę. Cena brutto wizyty wynosi: {wizyta['Cena brutto']}")
 
 def zapisz_wizyte(wizyta, plik_wizyt): 
     try:

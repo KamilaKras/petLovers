@@ -265,10 +265,11 @@ def waliduj_telefon(telefon):
 
 def waliduj_date(date_text):
     try:
-        datetime.datetime.strptime(date_text, '%d.%m.%Y')
-        return True
+        data_wizyty = datetime.datetime.strptime(date_text, '%d.%m.%Y')
+        return data_wizyty
     except ValueError:
-        return False
+        return None
+
 
 def waliduj_plec(plec):
     return plec.lower() in ['samiec', 'samica']
