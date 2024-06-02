@@ -1,7 +1,7 @@
 import json
 import os
 import clients
-from leki import dodaj_lek, edytuj_lek, usun_lek
+from leki import dodaj_lek, edytuj_lek, usun_lek, wyswietl_wszystkie_leki
 import visits
 import data
 
@@ -24,8 +24,9 @@ def main():
         print("7. Dodaj lek")
         print("8. Usuń lek")
         print("9. Edytuj lek")
-        print("10. Zakończ działanie programu")
-        wybor = input("Wybierz opcję (1/2/3/4/5/6/7/8/9/10): ")
+        print("10. Wyświetl aktualny stan magazynowy leków")
+        print("11. Zakończ działanie programu")
+        wybor = input("Wybierz opcję (1/2/3/4/5/6/7/8/9/10/11): ")
 
         if wybor == '1':
             pod_wybor = input("Czy chcesz dodać nowego klienta (D) czy zaktualizować dane istniejącego klienta (A)? (D/A): ").upper()
@@ -59,6 +60,8 @@ def main():
         elif wybor == '9':
             edytuj_lek()
         elif wybor == '10':
+            wyswietl_wszystkie_leki()
+        elif wybor == '11':
             print("Zakończono działanie programu.")
             break
         else:

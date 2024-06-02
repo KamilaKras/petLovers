@@ -67,4 +67,10 @@ def edytuj_lek():
         print("Nieprawidłowy wybór, spróbuj ponownie.")
     
 def wyswietl_wszystkie_leki():
-    return 0
+    leki = wczytaj_leki()
+    if not leki:
+        print("Brak leków w bazie danych.")
+    else:
+        print("Aktualna lista leków:")
+        for nazwa, dane in leki.items():
+            print(f"Nazwa: {nazwa}, Ilość: {dane['ilosc']}, Dostawca: {dane['dostawca']}")
