@@ -79,30 +79,41 @@ def usun_lek():
 def edytuj_lek():
     leki = wczytaj_leki()
     nazwa = input("Podaj nazwę leku do edytowania: ").strip()
+    while not nazwa:
+        print("Nazwa leku nie może być pusta.")
+        nazwa = input("Podaj nazwę leku do edytowania: ").strip()
+    
+    if nazwa not in leki:
+        print("Lek nie istnieje w bazie.")
+        return
+
     dokladny_wybor = input("Czy chcesz edytować ilość leku (I) czy zmienić dostawcę leku (D)? (I/D): ").strip().upper()
+    while dokladny_wybor not in ['I', 'D']:
+        print("Nieprawidłowy wybór. Proszę wybrać 'I' dla edycji ilości lub 'D' dla zmiany dostawcy.")
+        dokladny_wybor = input("Czy chcesz edytować ilość leku (I) czy zmienić dostawcę leku (D)? (I/D): ").strip().upper()
+
     if dokladny_wybor == 'I':
-        if nazwa in leki:
-            nowa_ilosc_input = input(f"Podaj nową ilość dla {nazwa}: ").strip()
-            try:
-                nowa_ilosc = int(nowa_ilosc_input)
-            except ValueError:
-                print("Nieprawidłowa ilość. Proszę podać liczbę.")
-                return
-            leki[nazwa]["ilosc"] = nowa_ilosc
-            zapisz_leki(leki)
-            print(f"Ilość leku {nazwa} została zaktualizowana.")
-        else:
-            print("Lek nie istnieje w bazie.")
+        while True:
+            nowa_ilosc = input(f"Podaj nową ilość dla {nazwa}: ").strip()
+            if waliduj_ilosc(nowa_ilosc):
+                if re.match(r'^\d+$', nowa_ilosc):
+                    potwierdzenie = input(f"Wpisałeś tylko {nowa_ilosc}. Czy na pewno chcesz zapisać tylko tę liczbę? (tak/nie): ").strip().lower()
+                    if potwierdzenie == 'tak':
+                        break
+                else:
+                    break
+            print("Nieprawidłowa ilość. Podaj ilość w formacie liczba jednostka (np. 10 opakowań).")
+        leki[nazwa]["ilosc"] = nowa_ilosc
+        zapisz_leki(leki)
+        print(f"Ilość leku {nazwa} została zaktualizowana.")
     elif dokladny_wybor == 'D':
-        if nazwa in leki:
-            nowy_dostawca = input(f"Podaj nowego dostawcę: ").strip()
-            leki[nazwa]["dostawca"] = nowy_dostawca
-            zapisz_leki(leki)
-            print(f"Dostawca leku {nazwa} został zaktualizowany.")
-        else:
-            print("Wystąpił błąd.")
-    else:
-        print("Nieprawidłowy wybór, spróbuj ponownie.")
+        nowy_dostawca = input(f"Podaj nowego dostawcę dla {nazwa}: ").strip()
+        while not nowy_dostawca:
+            print("Dostawca nie może być pusty.")
+            nowy_dostawca = input(f"Podaj nowego dostawcę dla {nazwa}: ").strip()
+        leki[nazwa]["dostawca"] = nowy_dostawca
+        zapisz_leki(leki)
+        print(f"Dostawca leku {nazwa} został zaktualizowany.")
     
 def wyswietl_wszystkie_leki():
     leki = wczytaj_leki()
