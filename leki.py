@@ -61,11 +61,18 @@ def dodaj_lek():
 def usun_lek():
     leki = wczytaj_leki()
     nazwa = input("Podaj nazwę leku do usunięcia: ").strip()
+    while not nazwa:
+        print("Nazwa leku nie może być pusta.")
+        nazwa = input("Podaj nazwę leku do usunięcia: ").strip()
 
     if nazwa in leki:
-        del leki[nazwa]
-        zapisz_leki(leki)
-        print(f"Lek {nazwa} został usunięty z bazy danych.")
+        potwierdzenie = input(f"Czy na pewno chcesz usunąć lek {nazwa}? (tak/nie): ").strip().lower()
+        if potwierdzenie == 'tak':
+            del leki[nazwa]
+            zapisz_leki(leki)
+            print(f"Lek {nazwa} został usunięty z bazy danych.")
+        else:
+            print("Anulowano usunięcie leku.")
     else:
         print("Lek nie istnieje w bazie.")
 
