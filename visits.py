@@ -69,7 +69,7 @@ def dodaj_wizyte(klienci, pacjent_id):
 def zapisz_wizyte(wizyta, plik_wizyt):
     try:
         if os.path.exists(plik_wizyt):
-            with open(plik_wizyt, 'r') as file:
+            with open(plik_wizyt, 'r', encoding='utf-8') as file:
                 wizyty = json.load(file)
         else:
             wizyty = {}
@@ -80,29 +80,9 @@ def zapisz_wizyte(wizyta, plik_wizyt):
     wizyta_id = len(wizyty) + 1
     wizyty[wizyta_id] = wizyta
 
-    with open(plik_wizyt, 'w') as file:
-        json.dump(wizyty, file, indent=4)
+    with open(plik_wizyt, 'w', encoding='utf-8') as file:
+        json.dump(wizyty, file, indent=4, ensure_ascii=False)
 
-    print(f"Dodano wizytę. Cena brutto wizyty wynosi: {wizyta['Cena brutto']}")
-
-def zapisz_wizyte(wizyta, plik_wizyt): 
-    try:
-        if os.path.exists(plik_wizyt):
-            with open(plik_wizyt, 'r') as file:
-                wizyty = json.load(file)
-        else:
-            wizyty = {}
-    
-    except json.JSONDecodeError:
-            print("Plik JSON jest pusty lub uszkodzony. Tworzenie nowego pliku.")
-            wizyty = {}
-    
-    wizyta_id = len(wizyty) + 1
-    wizyty[wizyta_id] = wizyta
-
-    with open(plik_wizyt, 'w') as file:
-        json.dump(wizyty, file, indent=4)
-    
     print(f"Dodano wizytę. Cena brutto wizyty wynosi: {wizyta['Cena brutto']}")
 
 def wyswietl_wszystkie_wizyty(plik_wizyt):
@@ -111,7 +91,7 @@ def wyswietl_wszystkie_wizyty(plik_wizyt):
         return
 
     try:
-        with open(plik_wizyt, 'r') as file:
+        with open(plik_wizyt, 'r', encoding='utf-8') as file:
             wizyty = json.load(file)
         if not wizyty:
             print("Brak zapisanych wizyt.")
@@ -131,7 +111,7 @@ def wyswietl_wizyty_pacjenta(plik_wizyt, id_pacjenta):
         return
 
     try:
-        with open(plik_wizyt, 'r') as file:
+        with open(plik_wizyt, 'r', encoding='utf-8') as file:
             wizyty = json.load(file)
         if not wizyty:
             print("Brak zapisanych wizyt.")

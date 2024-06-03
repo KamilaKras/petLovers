@@ -13,5 +13,5 @@ def wczytaj_dane(plik):
         return []
 
 def zapisz_dane(plik, dane):
-    with open(plik, 'w') as file:
-        json.dump(dane, file, indent=4)
+    with open(plik, 'w', encoding='utf-8') as file:
+        json.dump(dane, file, indent=4, ensure_ascii=False)

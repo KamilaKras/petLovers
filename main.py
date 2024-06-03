@@ -1,9 +1,13 @@
+import io
 import json
 import os
+import sys
 import clients
 from leki import dodaj_lek, edytuj_lek, usun_lek, wyswietl_wszystkie_leki
 import visits
 import data
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 def main():
     plik = 'clients.json'
@@ -69,5 +73,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
- 
