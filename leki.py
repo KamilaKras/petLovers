@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 LEKI_FILE_PATH = os.path.join(os.path.dirname(__file__), 'leki.json')
 
@@ -16,26 +17,46 @@ def zapisz_leki(leki):
     with open(LEKI_FILE_PATH, 'w') as file:
         json.dump(leki, file, indent=4)
 
+def waliduj_ilosc(ilosc):
+    pattern = r'^\d+\s*\w*$'
+    if re.match(pattern, ilosc):
+        return True
+    return False
+
 def dodaj_lek():
     leki = wczytaj_leki()
-    nazwa = input("Podaj nazwę leku: ").strip()
-    ilosc_input = input("Podaj ilość: ").strip()
-    try:
-        ilosc = int(ilosc_input)
-    except ValueError:
-        print("Nieprawidłowa ilość. Proszę podać liczbę.")
-        return
-    dostawca = input("Podaj dostawcę: ").strip()
 
+    nazwa = input("Podaj nazwę leku: ").strip()
+    while not nazwa:
+        print("Nazwa leku nie może być pusta.")
+        nazwa = input("Podaj nazwę leku: ").strip()
+    
     if nazwa in leki:
         print("Lek już istnieje w bazie.")
-    else:
-        leki[nazwa] = {
-            "ilosc": ilosc,
-            "dostawca": dostawca
-        }
-        zapisz_leki(leki)
-        print(f"Lek {nazwa} został dodany do bazy danych.")
+        return
+
+    while True:
+        ilosc = input("Podaj ilość (np. 10 opakowań): ").strip()
+        if waliduj_ilosc(ilosc):
+            if re.match(r'^\d+$', ilosc):
+                potwierdzenie = input(f"Wpisałeś tylko {ilosc}. Czy na pewno chcesz zapisać tylko tę liczbę? (tak/nie): ").strip().lower()
+                if potwierdzenie == 'tak':
+                    break
+            else:
+                break
+        print("Nieprawidłowa ilość. Podaj ilość w formacie liczba jednostka (np. 10 opakowań).")
+
+    dostawca = input("Podaj dostawcę: ").strip()
+    while not dostawca:
+        print("Dostawca nie może być pusty.")
+        dostawca = input("Podaj dostawcę: ").strip()
+
+    leki[nazwa] = {
+        "ilosc": ilosc,
+        "dostawca": dostawca
+    }
+    zapisz_leki(leki)
+    print(f"Lek {nazwa} został dodany do bazy danych.")
 
 def usun_lek():
     leki = wczytaj_leki()
