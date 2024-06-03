@@ -1,3 +1,77 @@
 [
-
+    {
+        "id_zwierzecia": "001",
+        "imie": "Kasia",
+        "nazwisko": "Nowak",
+        "email": "kasia.nowak@example.com",
+        "telefon": "987657389",
+        "zwierze": {
+            "imie_zwierzecia": "Burek",
+            "data_urodzenia": "10.10.2021",
+            "typ_zwierzecia": "kot",
+            "plec_zwierzecia": "samiec",
+            "rasa": "owczarek",
+            "numer_mikroczipa": "123456789129356"
+        }
+    },
+    {
+        "id_zwierzecia": "002",
+        "imie": "Piotr",
+        "nazwisko": "Kowalski",
+        "email": "piotr.kowalski@example.com",
+        "telefon": "937483772",
+        "zwierze": {
+            "imie_zwierzecia": "Puszek",
+            "data_urodzenia": "05.03.2020",
+            "typ_zwierzecia": "pies",
+            "plec_zwierzecia": "samiec",
+            "rasa": "kundelek",
+            "numer_mikroczipa": "129405829345697"
+        }
+    },
+    {
+        "id_zwierzecia": "003",
+        "imie": "Anna",
+        "nazwisko": "Zalewska",
+        "email": "anna.zalewska@example.com",
+        "telefon": "737482943",
+        "zwierze": {
+            "imie_zwierzecia": "Kicia",
+            "data_urodzenia": "12.11.2018",
+            "typ_zwierzecia": "kot",
+            "plec_zwierzecia": "samica",
+            "rasa": "perski",
+            "numer_mikroczipa": "234567891234567"
+        }
+    },
+    {
+        "id_zwierzecia": "004",
+        "imie": "Jan",
+        "nazwisko": "Nowakowski",
+        "email": "jan.nowakowski@example.com",
+        "telefon": "836482756",
+        "zwierze": {
+            "imie_zwierzecia": "Puszek",
+            "data_urodzenia": "22.07.2017",
+            "typ_zwierzecia": "pies",
+            "plec_zwierzecia": "samiec",
+            "rasa": "golden retriever",
+            "numer_mikroczipa": "345678912345678"
+        }
+    },
+    {
+        "id_zwierzecia": "005",
+        "imie": "Maria",
+        "nazwisko": "Kwiatkowska",
+        "email": "maria.kwiatkowska@example.com",
+        "telefon": "738495628",
+        "zwierze": {
+            "imie_zwierzecia": "Łucja",
+            "data_urodzenia": "30.04.2019",
+            "typ_zwierzecia": "kot",
+            "plec_zwierzecia": "samica",
+            "rasa": "syjamski",
+            "numer_mikroczipa": "456789123456789"
+        }
+    }
 ]

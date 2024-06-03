@@ -1,3 +1,122 @@
 {
-
+    "1": {
+        "Data wizyty": "02.06.2023",
+        "Pacjent": "001",
+        "Choroba": "Grypa",
+        "Recepta": {
+            "Leki": "Paracetamol",
+            "Dawkowanie": "1 tabletka co 8 godzin"
+        },
+        "Dodatkowe informacje": "Odpoczynek i dużo płynów",
+        "Cena netto": 50.0,
+        "Cena brutto": "54,00 zł"
+    },
+    "2": {
+        "Data wizyty": "10.05.2023",
+        "Pacjent": "002",
+        "Choroba": "Infekcja ucha",
+        "Recepta": {
+            "Leki": "Antybiotyk",
+            "Dawkowanie": "1 kapsułka co 12 godzin"
+        },
+        "Dodatkowe informacje": "Unikać wody w uszach przez 10 dni",
+        "Cena netto": 80.0,
+        "Cena brutto": "86,40 zł"
+    },
+    "3": {
+        "Data wizyty": "15.04.2023",
+        "Pacjent": "003",
+        "Choroba": "Zapalenie stawów",
+        "Recepta": {
+            "Leki": "Ibuprofen",
+            "Dawkowanie": "2 tabletki co 6 godzin"
+        },
+        "Dodatkowe informacje": "Stosować maści przeciwzapalne",
+        "Cena netto": 70.0,
+        "Cena brutto": "75,60 zł"
+    },
+    "4": {
+        "Data wizyty": "20.03.2023",
+        "Pacjent": "004",
+        "Choroba": "Alergia skórna",
+        "Recepta": {
+            "Leki": "Krem antyhistaminowy",
+            "Dawkowanie": "Stosować na skórę 2 razy dziennie"
+        },
+        "Dodatkowe informacje": "Unikać alergenów",
+        "Cena netto": 60.0,
+        "Cena brutto": "64,80 zł"
+    },
+    "5": {
+        "Data wizyty": "28.02.2023",
+        "Pacjent": "005",
+        "Choroba": "Niedoczynność tarczycy",
+        "Recepta": {
+            "Leki": "Hormony tarczycy",
+            "Dawkowanie": "1 tabletka dziennie"
+        },
+        "Dodatkowe informacje": "Regularne badania krwi co 3 miesiące",
+        "Cena netto": 100.0,
+        "Cena brutto": "108,00 zł"
+    },
+    "6": {
+        "Data wizyty": "05.01.2023",
+        "Pacjent": "001",
+        "Choroba": "Przeziębienie",
+        "Recepta": {
+            "Leki": "Syrop na kaszel",
+            "Dawkowanie": "5 ml co 4 godziny"
+        },
+        "Dodatkowe informacje": "Dużo odpoczynku",
+        "Cena netto": 40.0,
+        "Cena brutto": "43,20 zł"
+    },
+    "7": {
+        "Data wizyty": "12.12.2022",
+        "Pacjent": "002",
+        "Choroba": "Zapalenie płuc",
+        "Recepta": {
+            "Leki": "Antybiotyk",
+            "Dawkowanie": "1 kapsułka co 8 godzin"
+        },
+        "Dodatkowe informacje": "Regularne kontrolne badania",
+        "Cena netto": 120.0,
+        "Cena brutto": "129,60 zł"
+    },
+    "8": {
+        "Data wizyty": "18.11.2022",
+        "Pacjent": "003",
+        "Choroba": "Problemy żołądkowe",
+        "Recepta": {
+            "Leki": "Probiotyki",
+            "Dawkowanie": "1 kapsułka dziennie"
+        },
+        "Dodatkowe informacje": "Unikać tłustych potraw",
+        "Cena netto": 30.0,
+        "Cena brutto": "32,40 zł"
+    },
+    "9": {
+        "Data wizyty": "25.10.2022",
+        "Pacjent": "004",
+        "Choroba": "Choroba nerek",
+        "Recepta": {
+            "Leki": "Leki moczopędne",
+            "Dawkowanie": "1 tabletka co 12 godzin"
+        },
+        "Dodatkowe informacje": "Kontrola poziomu elektrolitów",
+        "Cena netto": 90.0,
+        "Cena brutto": "97,20 zł"
+    },
+    "10": {
+        "Data wizyty": "30.09.2022",
+        "Pacjent": "005",
+        "Choroba": "Zapalenie spojówek",
+        "Recepta": {
+            "Leki": "Krople do oczu",
+            "Dawkowanie": "2 krople co 4 godziny"
+        },
+        "Dodatkowe informacje": "Unikać jasnego światła",
+        "Cena netto": 50.0,
+        "Cena brutto": "54,00 zł"
+    }
 }

@@ -1,14 +1,30 @@
 {
     "Paracetamol": {
-        "ilosc": 100,
+        "ilosc": "200 opakowań",
         "dostawca": "PharmaCorp"
     },
     "Ibuprofen": {
-        "ilosc": 200,
+        "ilosc": "150 opakowań",
         "dostawca": "MediHealth"
     },
     "Amoxicillin": {
-        "ilosc": 150,
+        "ilosc": "100 opakowań",
         "dostawca": "GlobalMed"
+    },
+    "Metronidazole": {
+        "ilosc": "80 opakowań",
+        "dostawca": "HealthSupplies"
+    },
+    "Ciprofloxacin": {
+        "ilosc": "120 opakowań",
+        "dostawca": "WellnessPharma"
+    },
+    "Aspirin": {
+        "ilosc": "300 opakowań",
+        "dostawca": "CareMeds"
+    },
+    "Cetirizine": {
+        "ilosc": "180 opakowań",
+        "dostawca": "AllerPharma"
     }
 }
