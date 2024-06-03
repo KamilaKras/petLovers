@@ -16,13 +16,12 @@ def main():
         print("3. Znajdź pacjenta, wyświetl wizyty i dodaj wizytę")
         print("4. Znajdź po mikroczipie")
         print("5. Wyświetl wszystkie wizyty")
-        print("6. Dodaj nową wizytę dla dowolnego pacjenta")
-        print("7. Dodaj lek")
-        print("8. Usuń lek")
-        print("9. Edytuj lek")
-        print("10. Wyświetl aktualny stan magazynowy leków")
-        print("11. Zakończ działanie programu")
-        wybor = input("Wybierz opcję (1/2/3/4/5/6/7/8/9/10/11): ").strip()
+        print("6. Dodaj lek")
+        print("7. Usuń lek")
+        print("8. Edytuj lek")
+        print("9. Wyświetl aktualny stan magazynowy leków")
+        print("10. Zakończ działanie programu")
+        wybor = input("Wybierz opcję (1/2/3/4/5/6/7/8/9/10): ").strip()
 
         if wybor == '1':
             pod_wybor = input("Czy chcesz dodać nowego klienta (D) czy zaktualizować dane istniejącego klienta (A)? (D/A): ").strip().upper()
@@ -55,17 +54,14 @@ def main():
         elif wybor == '5':
             visits.wyswietl_wszystkie_wizyty(plik_wizyt)
         elif wybor == '6':
-            wizyta = visits.dodaj_wizyte()
-            visits.zapisz_wizyte(wizyta)
-        elif wybor == '7':
             dodaj_lek()
-        elif wybor == '8':
+        elif wybor == '7':
             usun_lek()
-        elif wybor == '9':
+        elif wybor == '8':
             edytuj_lek()
-        elif wybor == '10':
+        elif wybor == '9':
             wyswietl_wszystkie_leki()
-        elif wybor == '11':
+        elif wybor == '10':
             print("Zakończono działanie programu.")
             break
         else:
