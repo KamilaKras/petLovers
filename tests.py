@@ -2,10 +2,11 @@ import datetime
 import io
 import json
 import os
-from unittest.mock import patch, mock_open
+from unittest.mock import MagicMock, patch, mock_open
 import clients
 import visits
 import data
+import leki
 
 # Test dla funkcji przeliczanie_ceny
 def test_przeliczanie_ceny():
@@ -17,23 +18,6 @@ def test_przeliczanie_ceny():
     assert result1 == "108,00 zł", f"Błąd: nieprawidłowe obliczenie ceny brutto dla 100, wynik: {result1}"
     assert result2 == "216,00 zł", f"Błąd: nieprawidłowe obliczenie ceny brutto dla 200, wynik: {result2}"
     assert result3 == "Brak danych", f"Błąd: nieprawidłowe obliczenie ceny brutto dla 'Brak danych', wynik: {result3}"
-
-# Test dla funkcji wczytaj_dane
-def test_wczytaj_dane():
-    # Test, gdy plik nie istnieje
-    with patch('os.path.exists', return_value=False):
-        assert data.wczytaj_dane("nieistniejacy_plik.json") == [], "Błąd: powinno zwrócić pustą listę, gdy plik nie istnieje"
-    
-    # Test, gdy plik istnieje i jest poprawny
-    sample_data = [{"id_zwierzecia": "001"}]
-    with patch('os.path.exists', return_value=True):
-        with patch('builtins.open', mock_open(read_data=json.dumps(sample_data))):
-            assert data.wczytaj_dane("istniejacy_plik.json") == sample_data, "Błąd: powinno zwrócić dane z pliku"
-
-    # Test, gdy plik istnieje, ale zawiera błędne dane JSON
-    with patch('os.path.exists', return_value=True):
-        with patch('builtins.open', mock_open(read_data="niepoprawny json")):
-            assert data.wczytaj_dane("bledny_plik.json") == [], "Błąd: powinno zwrócić pustą listę dla błędnego JSON"
 
 # Test dla funkcji generuj_id_zwierzecia
 def test_generuj_id_zwierzecia():
@@ -56,7 +40,7 @@ def test_znajdz_klienta_po_id():
 def test_dodaj_wizyte():
     klienci = [{'id_zwierzecia': '001', 'imie': 'Jan'}]
     
-    user_inputs = ['19.02.2019', '001', 'katar', 'aspiryna', '', '', '100']
+    user_inputs = ['19.02.2019', 'katar', 'aspiryna', '', '', '100']
     expected_output = {
         'Data wizyty': '19.02.2019', 
         'Pacjent': '001', 
@@ -71,7 +55,7 @@ def test_dodaj_wizyte():
     }
     
     with patch('builtins.input', side_effect=user_inputs), patch('clients.znajdz_klienta_po_id', return_value=klienci[0]):
-        result = visits.dodaj_wizyte(klienci)
+        result = visits.dodaj_wizyte(klienci, '001')
         assert result == expected_output, f"Test failed: dodaj_wizyte did not return expected dictionary. Wynik: {result}"
 
 # Test dla funkcji zapisz_wizyte
@@ -89,15 +73,19 @@ def test_zapisz_wizyte():
         'Cena brutto': '162,00 zł'
     }
     plik_wizyt = 'wizyty.json'
-    mock_file = mock_open(read_data="")  # Symuluj pusty plik
+    mock_file = mock_open(read_data=json.dumps({}))
 
     with patch('builtins.open', mock_file), patch('os.path.exists', return_value=True):
         visits.zapisz_wizyte(wizyta, plik_wizyt)
 
-        mock_file.assert_any_call(plik_wizyt, 'w')
-        mock_file.assert_any_call(plik_wizyt, 'r')
+        mock_file.assert_any_call(plik_wizyt, 'w', encoding='utf-8')
+        mock_file.assert_any_call(plik_wizyt, 'r', encoding='utf-8')
 
-        assert mock_file().write.called, "Nie wywołano metody write."
+        handle = mock_file()
+        written_data = "".join(call.args[0] for call in handle.write.call_args_list)
+        expected_data = json.dumps({1: wizyta}, indent=4, ensure_ascii=False)
+        
+        assert written_data == expected_data, f"Błąd: Zapisane dane nie są zgodne z oczekiwanymi. Wynik: {written_data}"
 
 # Test dla funkcji wyswietl_wszystkie_wizyty
 def test_wyswietl_wszystkie_wizyty():
@@ -203,10 +191,192 @@ def test_sprawdzenie_numeru_mikroczipa():
     # Test niepoprawnego numeru mikroczipa
     with patch('builtins.input', side_effect=['123', '543210987654321']):
         assert clients.sprawdzenie_numeru_mikroczipa(klienci) == '543210987654321', "Błąd: powinno zwrócić poprawny numer mikroczipa po podaniu niepoprawnego"
+# Test dla funkcji usun_znaki_diakrytyczne
+def test_usun_znaki_diakrytyczne():
+    assert clients.usun_znaki_diakrytyczne('Łucja') == 'lucja', "Błąd: nieprawidłowe usunięcie znaków diakrytycznych"
+    assert clients.usun_znaki_diakrytyczne('Śląsk') == 'slask', "Błąd: nieprawidłowe usunięcie znaków diakrytycznych"
+    assert clients.usun_znaki_diakrytyczne('Café') == 'cafe', "Błąd: nieprawidłowe usunięcie znaków diakrytycznych"
 
+# Test dla funkcji dodaj_klienta
+def test_dodaj_klienta():
+    klienci = []
+    user_inputs = [
+        'Jan', 'Kowalski', 'jan.kowalski@example.com', '123456789', 
+        'Burek', '01.01.2015', 'Pies', 'Samiec', 'Owczarek', '123456789012345'
+    ]
+    expected_output = {
+        'id_zwierzecia': '001',
+        'imie': 'Jan',
+        'nazwisko': 'Kowalski',
+        'email': 'jan.kowalski@example.com',
+        'telefon': '123456789',
+        'zwierze': {
+            'imie_zwierzecia': 'Burek',
+            'data_urodzenia': '01.01.2015',
+            'typ_zwierzecia': 'Pies',
+            'plec_zwierzecia': 'samiec',
+            'rasa': 'Owczarek',
+            'numer_mikroczipa': '123456789012345'
+        }
+    }
+    with patch('builtins.input', side_effect=user_inputs), patch('data.zapisz_dane') as mock_zapisz_dane:
+        clients.dodaj_klienta(klienci, 'clients.json')
+        assert klienci[0] == expected_output, f"Błąd: dodaj_klienta nie zwróciło oczekiwanego słownika. Wynik: {klienci[0]}"
+
+# Test dla funkcji aktualizuj_klienta
+def test_aktualizuj_klienta():
+    klienci = [{
+        'id_zwierzecia': '001',
+        'imie': 'Jan',
+        'nazwisko': 'Kowalski',
+        'email': 'jan.kowalski@example.com',
+        'telefon': '123456789',
+        'zwierze': {
+            'imie_zwierzecia': 'Burek',
+            'data_urodzenia': '01.01.2015',
+            'typ_zwierzecia': 'Pies',
+            'plec_zwierzecia': 'samiec',
+            'rasa': 'Owczarek',
+            'numer_mikroczipa': '123456789012345'
+        }
+    }]
+    user_inputs = ['001', 'Janusz', '', '', '', '', '', '', '', '', '']
+    expected_output = {
+        'id_zwierzecia': '001',
+        'imie': 'Janusz',
+        'nazwisko': 'Kowalski',
+        'email': 'jan.kowalski@example.com',
+        'telefon': '123456789',
+        'zwierze': {
+            'imie_zwierzecia': 'Burek',
+            'data_urodzenia': '01.01.2015',
+            'typ_zwierzecia': 'Pies',
+            'plec_zwierzecia': 'samiec',
+            'rasa': 'Owczarek',
+            'numer_mikroczipa': '123456789012345'
+        }
+    }
+    with patch('builtins.input', side_effect=user_inputs), patch('data.zapisz_dane') as mock_zapisz_dane:
+        clients.aktualizuj_klienta(klienci, 'clients.json')
+        assert klienci[0] == expected_output, f"Błąd: aktualizuj_klienta nie zaktualizowało poprawnie klienta. Wynik: {klienci[0]}"
+
+# Test dla funkcji normalizuj_id
+def test_normalizuj_id():
+    assert clients.normalizuj_id('1') == '001', "Błąd: niepoprawna normalizacja ID dla '1'"
+    assert clients.normalizuj_id('12') == '012', "Błąd: niepoprawna normalizacja ID dla '12'"
+    assert clients.normalizuj_id('123') == '123', "Błąd: niepoprawna normalizacja ID dla '123'"
+
+# Test dla funkcji waliduj_date
+def test_waliduj_date():
+    assert visits.waliduj_date('01.01.2020') == datetime.datetime(2020, 1, 1), "Błąd: powinno zwrócić datę 01.01.2020"
+    assert visits.waliduj_date('32.01.2020') is None, "Błąd: nieprawidłowa data powinna zwrócić None"
+    assert visits.waliduj_date('01-01-2020') is None, "Błąd: nieprawidłowy format daty powinien zwrócić None"
+
+# Test dla funkcji zamien_none_na_brak_danych
+def test_zamien_none_na_brak_danych():
+    assert visits.zamien_none_na_brak_danych(None) == "Brak danych", "Błąd: powinno zwrócić 'Brak danych' dla None"
+    assert visits.zamien_none_na_brak_danych("None") == "Brak danych", "Błąd: powinno zwrócić 'Brak danych' dla 'None'"
+    assert visits.zamien_none_na_brak_danych("Dane") == "Dane", "Błąd: powinno zwrócić 'Dane' dla 'Dane'"
+
+# Test dla funkcji formatuj_cene
+def test_formatuj_cene():
+    assert visits.formatuj_cene(100) == "100,00 zł", "Błąd: niepoprawne formatowanie ceny dla 100"
+    assert visits.formatuj_cene(123.456) == "123,46 zł", "Błąd: niepoprawne formatowanie ceny dla 123.456"
+    assert visits.formatuj_cene("Brak danych") == "Brak danych", "Błąd: powinno zwrócić 'Brak danych' dla 'Brak danych'"
+
+# Test dla funkcji wczytaj_leki
+def test_wczytaj_leki():
+    # Test, gdy plik nie istnieje
+    with patch('os.path.exists', return_value=False):
+        assert leki.wczytaj_leki() == {}, "Błąd: powinno zwrócić pusty słownik, gdy plik nie istnieje"
+
+    # Test, gdy plik istnieje i jest poprawny
+    sample_data = {"Paracetamol": {"ilosc": "10 opakowań", "dostawca": "Firma A"}}
+    with patch('os.path.exists', return_value=True):
+        with patch('builtins.open', mock_open(read_data=json.dumps(sample_data))):
+            assert leki.wczytaj_leki() == sample_data, "Błąd: powinno zwrócić dane z pliku"
+
+    # Test, gdy plik istnieje, ale zawiera błędne dane JSON
+    with patch('os.path.exists', return_value=True):
+        with patch('builtins.open', mock_open(read_data="niepoprawny json")):
+            assert leki.wczytaj_leki() == {}, "Błąd: powinno zwrócić pusty słownik dla błędnego JSON"
+
+# Test dla funkcji zapisz_leki
+def test_zapisz_leki():
+    leki_data = {"Paracetamol": {"ilosc": "10 opakowań", "dostawca": "Firma A"}}
+    mock_file = mock_open()
+
+    with patch('builtins.open', mock_file):
+        leki.zapisz_leki(leki_data)
+
+        mock_file.assert_any_call(leki.LEKI_FILE_PATH, 'w')
+        handle = mock_file()
+        written_data = "".join(call.args[0] for call in handle.write.call_args_list)
+        expected_data = json.dumps(leki_data, indent=4)
+        
+        assert written_data == expected_data, f"Błąd: Zapisane dane nie są zgodne z oczekiwanymi. Wynik: {written_data}"
+
+# Test dla funkcji waliduj_ilosc
+def test_waliduj_ilosc():
+    assert leki.waliduj_ilosc('10 opakowań') is True, "Błąd: powinno zwrócić True dla '10 opakowań'"
+    assert leki.waliduj_ilosc('5') is True, "Błąd: powinno zwrócić True dla '5'"
+    assert leki.waliduj_ilosc('opakowań 10') is False, "Błąd: powinno zwrócić False dla 'opakowań 10'"
+    assert leki.waliduj_ilosc('10opakowań') is True, "Błąd: powinno zwrócić True dla '10opakowań'"
+
+# Test dla funkcji dodaj_lek
+def test_dodaj_lek():
+    leki_data = {}
+    user_inputs = ['Aspiryna', '10 opakowań', 'Firma B']
+
+    with patch('builtins.input', side_effect=user_inputs), \
+         patch('leki.wczytaj_leki', return_value=leki_data), \
+         patch('leki.zapisz_leki') as mock_zapisz_leki:
+        leki.dodaj_lek()
+
+        assert 'Aspiryna' in leki_data, "Błąd: lek nie został dodany do słownika"
+        assert leki_data['Aspiryna'] == {"ilosc": "10 opakowań", "dostawca": "Firma B"}, f"Błąd: dane leku są niepoprawne. Wynik: {leki_data['Aspiryna']}"
+
+# Test dla funkcji usun_lek
+def test_usun_lek():
+    leki_data = {"Aspiryna": {"ilosc": "10 opakowań", "dostawca": "Firma B"}}
+    user_inputs = ['Aspiryna', 'tak']
+
+    with patch('builtins.input', side_effect=user_inputs), \
+         patch('leki.wczytaj_leki', return_value=leki_data), \
+         patch('leki.zapisz_leki') as mock_zapisz_leki:
+        leki.usun_lek()
+
+        assert 'Aspiryna' not in leki_data, "Błąd: lek nie został usunięty ze słownika"
+
+# Test dla funkcji edytuj_lek
+def test_edytuj_lek():
+    leki_data = {"Aspiryna": {"ilosc": "10 opakowań", "dostawca": "Firma B"}}
+    user_inputs_ilosc = ['Aspiryna', 'I', '20 opakowań']
+    user_inputs_dostawca = ['Aspiryna', 'D', 'Firma C']
+
+    with patch('builtins.input', side_effect=user_inputs_ilosc), \
+         patch('leki.wczytaj_leki', return_value=leki_data), \
+         patch('leki.zapisz_leki') as mock_zapisz_leki:
+        leki.edytuj_lek()
+        assert leki_data['Aspiryna']['ilosc'] == '20 opakowań', f"Błąd: ilość leku nie została zaktualizowana. Wynik: {leki_data['Aspiryna']['ilosc']}"
+
+    with patch('builtins.input', side_effect=user_inputs_dostawca), \
+         patch('leki.wczytaj_leki', return_value=leki_data), \
+         patch('leki.zapisz_leki') as mock_zapisz_leki:
+        leki.edytuj_lek()
+        assert leki_data['Aspiryna']['dostawca'] == 'Firma C', f"Błąd: dostawca leku nie został zaktualizowany. Wynik: {leki_data['Aspiryna']['dostawca']}"
+
+# Test dla funkcji wyswietl_wszystkie_leki
+def test_wyswietl_wszystkie_leki():
+    leki_data = {"Aspiryna": {"ilosc": "10 opakowań", "dostawca": "Firma B"}}
+    expected_output = "Aktualna lista leków:\nNazwa: Aspiryna, Ilość: 10 opakowań, Dostawca: Firma B\n"
+
+    with patch('leki.wczytaj_leki', return_value=leki_data), \
+         patch('sys.stdout', new=io.StringIO()) as fake_out:
+        leki.wyswietl_wszystkie_leki()
+        assert fake_out.getvalue() == expected_output, f"Test failed: Output not as expected. Output: {fake_out.getvalue()}"
 
 # Wywołanie testów
-test_wczytaj_dane()
 test_generuj_id_zwierzecia()
 test_znajdz_klienta_po_id()
 test_przeliczanie_ceny()
@@ -218,3 +388,17 @@ test_znajdz_klienta_po_imieniu_zwierzaka()
 test_oblicz_wiek()
 test_znajdz_klienta_po_mikroczipie()
 test_sprawdzenie_numeru_mikroczipa()
+test_usun_znaki_diakrytyczne()
+test_dodaj_klienta()
+test_aktualizuj_klienta()
+test_normalizuj_id()
+test_waliduj_date()
+test_zamien_none_na_brak_danych()
+test_formatuj_cene()
+test_wczytaj_leki()
+test_zapisz_leki()
+test_waliduj_ilosc()
+test_dodaj_lek()
+test_usun_lek()
+test_edytuj_lek()
+test_wyswietl_wszystkie_leki()
