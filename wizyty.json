@@ -118,5 +118,17 @@
         "Dodatkowe informacje": "Unikać jasnego światła",
         "Cena netto": 50.0,
         "Cena brutto": "54,00 zł"
+    },
+    "11": {
+        "Data wizyty": "02.06.2024",
+        "Pacjent": "002",
+        "Choroba": "alergia",
+        "Recepta": {
+            "Leki": "witaminy",
+            "Dawkowanie": "2 dziennie"
+        },
+        "Dodatkowe informacje": "brak",
+        "Cena netto": 100.0,
+        "Cena brutto": "108,00 zł"
     }
 }

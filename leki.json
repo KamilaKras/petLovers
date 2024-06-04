@@ -26,5 +26,9 @@
     "Cetirizine": {
         "ilosc": "180 opakowań",
         "dostawca": "AllerPharma"
+    },
+    "Witamina B": {
+        "ilosc": "11",
+        "dostawca": "WiaminsWorld"
     }
 }

@@ -64,10 +64,10 @@ def dodaj_klienta(klienci, plik):
     while not waliduj_email(email):
         print("Nieprawidłowy email. Spróbuj ponownie.")
         email = input("Podaj email właściciela: ").strip()
-    telefon = input("Podaj telefon właściciela: ").strip()
+    telefon = input("Podaj telefon właściciela (9 cyfr): ").strip()
     while not waliduj_telefon(telefon):
         print("Nieprawidłowy numer telefonu. Spróbuj ponownie.")
-        telefon = input("Podaj telefon właściciela: ").strip()
+        telefon = input("Podaj telefon właściciela (9 cyfr): ").strip()
     imie_zwierzecia = input("Podaj imię zwierzęcia: ").strip().capitalize()
     data_urodzenia_zwierzecia = input("Podaj datę urodzenia zwierzęcia (DD.MM.RRRR): ").strip()
     while not waliduj_date(data_urodzenia_zwierzecia):
@@ -236,3 +236,6 @@ def waliduj_plec(plec):
 
 def normalizuj_id(id_zwierzecia):
     return id_zwierzecia.zfill(3)
+
+def waliduj_telefon(telefon):
+    return telefon.isdigit() and len(telefon) == 9
