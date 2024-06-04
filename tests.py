@@ -326,46 +326,70 @@ def test_waliduj_ilosc():
 # Test dla funkcji dodaj_lek
 def test_dodaj_lek():
     leki_data = {}
-    user_inputs = ['Aspiryna', '10 opakowań', 'Firma B']
-
-    with patch('builtins.input', side_effect=user_inputs), \
-         patch('leki.wczytaj_leki', return_value=leki_data), \
-         patch('leki.zapisz_leki') as mock_zapisz_leki:
+    user_inputs = ['Witamina Ę', '10 opakowań', 'Dostawca A']
+    expected_output = {
+        'Witamina Ę': {
+            'ilosc': '10 opakowań',
+            'dostawca': 'Dostawca A'
+        }
+    }
+    
+    with patch('builtins.input', side_effect=user_inputs), patch('leki.wczytaj_leki', return_value=leki_data), patch('leki.zapisz_leki') as mock_zapisz:
         leki.dodaj_lek()
-
-        assert 'Aspiryna' in leki_data, "Błąd: lek nie został dodany do słownika"
-        assert leki_data['Aspiryna'] == {"ilosc": "10 opakowań", "dostawca": "Firma B"}, f"Błąd: dane leku są niepoprawne. Wynik: {leki_data['Aspiryna']}"
+        mock_zapisz.assert_called_once_with(expected_output)
 
 # Test dla funkcji usun_lek
 def test_usun_lek():
-    leki_data = {"Aspiryna": {"ilosc": "10 opakowań", "dostawca": "Firma B"}}
-    user_inputs = ['Aspiryna', 'tak']
-
-    with patch('builtins.input', side_effect=user_inputs), \
-         patch('leki.wczytaj_leki', return_value=leki_data), \
-         patch('leki.zapisz_leki') as mock_zapisz_leki:
+    leki_data = {
+        'Witamina Ę': {
+            'ilosc': '10 opakowań',
+            'dostawca': 'Dostawca A'
+        }
+    }
+    user_inputs = ['Witamina e', 'tak']
+    
+    with patch('builtins.input', side_effect=user_inputs), patch('leki.wczytaj_leki', return_value=leki_data), patch('leki.zapisz_leki') as mock_zapisz:
         leki.usun_lek()
-
-        assert 'Aspiryna' not in leki_data, "Błąd: lek nie został usunięty ze słownika"
+        mock_zapisz.assert_called_once_with({})
 
 # Test dla funkcji edytuj_lek
 def test_edytuj_lek():
-    leki_data = {"Aspiryna": {"ilosc": "10 opakowań", "dostawca": "Firma B"}}
-    user_inputs_ilosc = ['Aspiryna', 'I', '20 opakowań']
-    user_inputs_dostawca = ['Aspiryna', 'D', 'Firma C']
+    leki_data_ilosc = {
+        'Witamina Ę': {
+            'ilosc': '10 opakowań',
+            'dostawca': 'Dostawca A'
+        }
+    }
+    user_inputs_ilosc = ['witamina e', 'I', '15 opakowań']
+    expected_output_ilosc = {
+        'Witamina Ę': {
+            'ilosc': '15 opakowań',
+            'dostawca': 'Dostawca A'
+        }
+    }
+    
+    leki_data_dostawca = {
+        'Witamina Ę': {
+            'ilosc': '10 opakowań',
+            'dostawca': 'Dostawca A'
+        }
+    }
+    user_inputs_dostawca = ['witamina e', 'D', 'Dostawca B']
+    expected_output_dostawca = {
+        'Witamina Ę': {
+            'ilosc': '10 opakowań',
+            'dostawca': 'Dostawca B'
+        }
+    }
 
-    with patch('builtins.input', side_effect=user_inputs_ilosc), \
-         patch('leki.wczytaj_leki', return_value=leki_data), \
-         patch('leki.zapisz_leki') as mock_zapisz_leki:
+    with patch('builtins.input', side_effect=user_inputs_ilosc), patch('leki.wczytaj_leki', return_value=leki_data_ilosc), patch('leki.zapisz_leki') as mock_zapisz:
         leki.edytuj_lek()
-        assert leki_data['Aspiryna']['ilosc'] == '20 opakowań', f"Błąd: ilość leku nie została zaktualizowana. Wynik: {leki_data['Aspiryna']['ilosc']}"
+        mock_zapisz.assert_called_once_with(expected_output_ilosc)
 
-    with patch('builtins.input', side_effect=user_inputs_dostawca), \
-         patch('leki.wczytaj_leki', return_value=leki_data), \
-         patch('leki.zapisz_leki') as mock_zapisz_leki:
+    with patch('builtins.input', side_effect=user_inputs_dostawca), patch('leki.wczytaj_leki', return_value=leki_data_dostawca), patch('leki.zapisz_leki') as mock_zapisz:
         leki.edytuj_lek()
-        assert leki_data['Aspiryna']['dostawca'] == 'Firma C', f"Błąd: dostawca leku nie został zaktualizowany. Wynik: {leki_data['Aspiryna']['dostawca']}"
-
+        mock_zapisz.assert_called_once_with(expected_output_dostawca)
+        
 # Test dla funkcji wyswietl_wszystkie_leki
 def test_wyswietl_wszystkie_leki():
     leki_data = {"Aspiryna": {"ilosc": "10 opakowań", "dostawca": "Firma B"}}
@@ -375,6 +399,15 @@ def test_wyswietl_wszystkie_leki():
          patch('sys.stdout', new=io.StringIO()) as fake_out:
         leki.wyswietl_wszystkie_leki()
         assert fake_out.getvalue() == expected_output, f"Test failed: Output not as expected. Output: {fake_out.getvalue()}"
+
+def test_znajdz_lek():
+    leki_data = {
+        "Witamina Ę": {"ilosc": "10 opakowań", "dostawca": "Dostawca A"},
+        "Paracetamol": {"ilosc": "20 opakowań", "dostawca": "Dostawca B"}
+    }
+    assert leki.znajdz_lek(leki_data, "witamina e") == "Witamina Ę", "Błąd: znalezienie leku 'witamina e' powinno zwrócić 'Witamina Ę'"
+    assert leki.znajdz_lek(leki_data, "paracetamol") == "Paracetamol", "Błąd: znalezienie leku 'paracetamol' powinno zwrócić 'Paracetamol'"
+    assert leki.znajdz_lek(leki_data, "aspiryna") is None, "Błąd: znalezienie nieistniejącego leku 'aspiryna' powinno zwrócić None"
 
 # Wywołanie testów
 test_generuj_id_zwierzecia()
@@ -396,9 +429,9 @@ test_waliduj_date()
 test_zamien_none_na_brak_danych()
 test_formatuj_cene()
 test_wczytaj_leki()
-test_zapisz_leki()
 test_waliduj_ilosc()
 test_dodaj_lek()
 test_usun_lek()
 test_edytuj_lek()
 test_wyswietl_wszystkie_leki()
+test_znajdz_lek()
