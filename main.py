@@ -54,7 +54,7 @@ def main():
                     print("Nieprawidłowy wybór, spróbuj ponownie.")
         elif wybor == '4':
             numer_mikroczipa = input("Podaj numer mikroczipa: ").strip()
-            clients.wyszukaj_po_mikroczipie(klienci, numer_mikroczipa)
+            clients.znajdz_klienta_po_mikroczipie(klienci, numer_mikroczipa)
         elif wybor == '5':
             visits.wyswietl_wszystkie_wizyty(plik_wizyt)
         elif wybor == '6':
