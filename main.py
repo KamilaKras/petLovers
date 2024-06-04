@@ -54,7 +54,14 @@ def main():
                     print("Nieprawidłowy wybór, spróbuj ponownie.")
         elif wybor == '4':
             numer_mikroczipa = input("Podaj numer mikroczipa: ").strip()
-            clients.wyszukaj_po_mikroczipie(klienci, numer_mikroczipa)
+            klient = clients.znajdz_klienta_po_mikroczipie(klienci, numer_mikroczipa)
+            if klient:
+                print(f"Znaleziono klienta: ID: {klient['id_zwierzecia']}, Imię: {klient['imie']}, Nazwisko: {klient['nazwisko']}, "
+                    f"Email: {klient['email']}, Telefon: {klient['telefon']}, "
+                    f"Zwierzę: {klient['zwierze']['imie_zwierzecia']}, Data urodzenia: {klient['zwierze']['data_urodzenia']}, "
+                    f"Typ: {klient['zwierze']['typ_zwierzecia']}, Płeć: {klient['zwierze']['plec_zwierzecia']}, Rasa: {klient['zwierze']['rasa']}")
+            else:
+                print("Nie znaleziono klienta z podanym numerem mikroczipa.")
         elif wybor == '5':
             visits.wyswietl_wszystkie_wizyty(plik_wizyt)
         elif wybor == '6':
